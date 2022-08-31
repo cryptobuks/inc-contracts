@@ -1,0 +1,16 @@
+{
+  "name": "inc-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "author": "INC Contracts V1",
+  "license": "BUSL-1.1",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
+    "@truffle/contract": "^4.3.38",
+    "@truffle/hdwallet-provider": "^1.5.0",
+    "dotenv": "^10.0.0",
+    "truffle-contract-size": "^2.0.1",
+    "truffle-plugin-debugger": "0.0.2",
+    "truffle-plugin-verify": "^0.5.25"
+  }
+}
