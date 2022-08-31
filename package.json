@@ -1,8 +1,9 @@
 {
   "name": "inc-contracts",
+  "description": "INC Contracts V1",
   "version": "1.0.0",
   "private": true,
-  "author": "INC Contracts V1",
+  "author": "Incentive Token LLC",
   "license": "BUSL-1.1",
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",

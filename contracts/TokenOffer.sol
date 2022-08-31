@@ -101,17 +101,6 @@ contract TokenOffer is Ownable, ReentrancyGuard {
     }
 
     // -----------------------------------------
-    // Owner implementation
-    // -----------------------------------------
-
-    /**
-     * @dev Finalize initial offer
-     */
-    function finalize() external onlyOwner {// TODO puede que no deba hacer esto, sobre todo si van a desaparcer los datos de la venta
-        selfdestruct(payable(owner()));
-    }
-
-    // -----------------------------------------
     // Internal implementation
     // -----------------------------------------
 
