@@ -35,7 +35,7 @@ module.exports = async function (deployer, network, accounts) {
 
   const owner = accounts[0];
   const custody = accounts[1];
-  const relayers = accounts.slice(1, accounts.length);
+  const relayers = accounts.slice(2, accounts.length);
 
   console.log('owner:: ' + owner);
   console.log('custody:: ' + custody);
