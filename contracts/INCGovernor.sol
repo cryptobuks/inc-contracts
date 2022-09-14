@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.so
 contract INCGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
     constructor(IVotes _token, TimelockController _timelock)
         Governor("INC Governor")
-        GovernorSettings(1 /* 1 block */, 45818 /* 1 week */, 100000000e18 /* 0.1% */)
+        GovernorSettings(1 /* 1 block */, 45818 /* 1 week */, 1000000000e18 /* 0.1% */)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(5 /* 5% */)
         GovernorTimelockControl(_timelock)

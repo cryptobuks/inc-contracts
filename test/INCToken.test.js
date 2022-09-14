@@ -148,7 +148,7 @@ contract('INCToken', accounts => {
         await tokenInstance.transfer(user1, tokenUnits, { from : owner });
 
         // Check avg 1 day later
-        let startTime = Math.round(new Date().getTime() / 1000);
+        let startTime = (await time.latest()).toNumber();
         let endTime = startTime + DAY_SECONDS;
         let granularity = DAY_SECONDS;
         let timelineAvg = await tokenInstance.timelineAvgOf(user1, startTime, endTime, granularity);

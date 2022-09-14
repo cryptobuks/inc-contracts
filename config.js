@@ -1,9 +1,8 @@
 module.exports = {
-    TOTAL_SUPPLY: "100000000000",
-    LOCKED_DAO_TOKENS: "50000000000",// 50% Unlocking begins progressively in 3 months and ends in 3 years
-    INITIAL_OFFER_TOKENS: "20000000000",// 20% For Initial Offer
-    FREE_DAO_TOKENS: "10000000000",// 10% For Exchange Listings
-    // 20% For Founding Team, Advisors, Partnerships, Marketing & Charity
+    TOTAL_SUPPLY: "1000000000000",
+    LOCKED_DAO_TOKENS: "450000000000",// 45% Unlocking begins progressively and ends in 3 years
+    TOTAL_CONTRIBUTOR_TOKENS: "250000000000",// 25% For Founding Team, Collaborators & Marketing
+    INITIAL_OFFER_TOKENS: "150000000000",// 15% of the DAO balance, for the Initial Offer
     MIN_TIMELOCK_DELAY: "172800",
     UNLOCK_BEGIN: "2023-01-01",
     UNLOCK_CLIFF: "2023-06-01",

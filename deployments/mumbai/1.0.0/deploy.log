@@ -1,0 +1,309 @@
+$ truffle migrate -f 0 --to 100 --network mumbai --reset
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\TokenLock.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\abstractions\TokenBase.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IHolding.sol
+> Compiling .\contracts\interfaces\IMeasurement.sol
+> Compiling .\contracts\interfaces\IWETH.sol
+> Compiling .\contracts\libraries\IntUtils.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyEngine.sol
+> Compiling .\contracts\survey\SurveyStorage.sol
+> Compiling .\contracts\survey\SurveyStorage.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyEngine.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\NewEngine.sol
+> Compiling .\contracts\test\WETH.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.7+commit.e28d00a7.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20294016 (0x135a980)
+
+
+0_inc_token.js
+==============
+
+   Deploying 'Math'
+   ----------------
+   > transaction hash:    0x058e0a4be73bca804ac0ceca638369300148122dc915e4cf7076154d73c3344b
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x2C311765643cF0CB3555367E6e81c253AaF476ea
+   > block number:        28089523
+   > block timestamp:     1663113107
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.441476051485496536
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542500649953 ETH
+
+
+   Deploying 'INCToken'
+   --------------------
+   > transaction hash:    0x025f9ca53dc67d2b7a32ce3287b5d7996bea88bfcb214dd7b57aa70a7cf69cc5
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x0D19cc1c6dc90a312E80DF76068ff9FB518B8ab2
+   > block number:        28089525
+   > block timestamp:     1663113117
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.432350936452646122
+   > gas used:            3650046 (0x37b1fe)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.009125115032850414 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.009305657533500367 ETH
+
+
+1_inc_protocol.js
+=================
+
+   Deploying 'StringUtils'
+   -----------------------
+   > transaction hash:    0x2d835f77e15a21a64f800bc0eb373847ecbccdb697d2dd6659dc6a21eb98db8c
+   > Blocks: 1            Seconds: 8
+   > contract address:    0x16c73c4a9375f9A051625158bD9edF04b0450e6E
+   > block number:        28089528
+   > block timestamp:     1663113132
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.432170393951996169
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542500649953 ETH
+
+
+   Deploying 'IntUtils'
+   --------------------
+   > transaction hash:    0xa78b4e1b876de80e1e472de7a0fd7a033f3c0d162bbea1f11cadd39fb21f76cb
+   > Blocks: 2            Seconds: 8
+   > contract address:    0xa7006308dE0336De6faeA684AB72a1984B13345A
+   > block number:        28089530
+   > block timestamp:     1663113142
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.431989851451346216
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542500649953 ETH
+
+
+   Deploying 'SurveyStorage'
+   -------------------------
+   > transaction hash:    0x378d3f17cc7f4fe4c1327260b58acb0739b77046aa07430767405b93d9ac7482
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x9807BF2C25586e86c14f968785c836d812757496
+   > block number:        28089532
+   > block timestamp:     1663113152
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.420107506408569774
+   > gas used:            4752938 (0x48862a)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.011882345042776442 ETH
+
+
+   Deploying 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0xd860bb5bb7db820cdba0c8d14c03b8350b27e66836f74959e22b325ec107974b
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x3C058e0792ddAB253f7f624A4C1B6878272d9fBa
+   > block number:        28089535
+   > block timestamp:     1663113167
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.410559206374195894
+   > gas used:            3819320 (0x3a4738)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00954830003437388 ETH
+
+
+   Deploying 'INCForwarder'
+   ------------------------
+   > transaction hash:    0xd66613e8a0dfd6012df5f8b67e0e44b7b100858ffabd350ced0bbb34ea523806
+   > Blocks: 1            Seconds: 8
+   > contract address:    0x4ec70b4070563089bAaB0b7d46c595aa16e467D6
+   > block number:        28089537
+   > block timestamp:     1663113178
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.407873856364528634
+   > gas used:            1074140 (0x1063dc)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00268535000966726 ETH
+
+
+   Deploying 'SurveyEngine'
+   ------------------------
+   > transaction hash:    0xe7eab8c820c3f1ac7fd5464853ffdf8725abed00a52a54c12d0b63d200599da4
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x798a58DDF63D69bc413cbdFD582Fb635B5168F18
+   > block number:        28089540
+   > block timestamp:     1663113193
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.399864081335693444
+   > gas used:            3203910 (0x30e346)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00800977502883519 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.032486855116952678 ETH
+
+
+2_inc_governor.js
+=================
+
+   Deploying 'TimelockController'
+   ------------------------------
+   > transaction hash:    0x4167ddb774cfabb5c776eda2df959fe80495b9332aeb6b325cef20fa01571d8d
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x772dF3B2c52b85896236a286D278045f9Cda4942
+   > block number:        28089566
+   > block timestamp:     1663113323
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.393897648814214287
+   > gas used:            1914809 (0x1d37b9)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004787022517233281 ETH
+
+
+   Deploying 'INCGovernor'
+   -----------------------
+   > transaction hash:    0x278bc3d075ec75a9ae9c876455ce285a381c2af9ad312d14f353b21d7abcd04f
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x8Fa2B81455112c61aA3821ac5D8124bb63623816
+   > block number:        28089569
+   > block timestamp:     1663113338
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.384870948781718167
+   > gas used:            3610680 (0x371838)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00902670003249612 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.013813722549729401 ETH
+
+
+3_inc_tokenlock.js
+==================
+
+   Deploying 'TokenLock'
+   ---------------------
+   > transaction hash:    0xbc5308fb308f0b26a784c1185103c72c03687104e4b3debd72e831bde21dbe6a
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x1445A293cFB3FbEcb1c62eBf66B9F544b30438ed
+   > block number:        28089576
+   > block timestamp:     1663113373
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.383479388776708551
+   > gas used:            477615 (0x749af)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001194037504298535 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.001194037504298535 ETH
+
+
+4_distribute_tokens.js
+======================
+Token balances:
+  DAO: 30000000000
+  Contributors: 25000000000
+  TokenLock: 45000000000
+    Locked DAO: 45000000000
+  TOTAL: 100000000000
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+5_initial_offer.js
+==================
+
+   Deploying 'TokenOffer'
+   ----------------------
+   > transaction hash:    0x2b1a220dc8e599dd7f79e8f0a564420335956ec1d84391449ace5007eb3180f8
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x3005acb6Ca55A62161B2Cc94eFE80bcb1f827D8C
+   > block number:        28089585
+   > block timestamp:     1663113418
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             12.380111683764584813
+   > gas used:            767308 (0xbb54c)
+   > gas price:           2.500000009 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001918270006905772 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.001918270006905772 ETH
+
+
+98_transfer_ownership.js
+========================
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+99_write_abis.js
+================
+
+Addresses:
+  owner: 0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+  custody: 0x545728f530bF907d8c1eb279Aa95bE48cf175443
+  relayers: 0xD07e4Fb8b2BbA4422c64Ad68822D11235694bA84,0x0cC1ca329d9ED4ac79882ABbb10673A4e533FdEc,0x23Ea365F578447ef70e26b60f77a759F092aD246,0x12f5CcE584A0658ED9fa9070384Aa8783aC1eA4c,0xD860C5Dc44AAFd8904773f596BC256fF8fB3035e,0x2441462231F5e72de890701746a42642380bD3da,0x973Fb9eE2911A502D94f624f5dfd56a170AeF6Ef,0xBb12C76EF2242E91C2AaF21854383c9DB69EF3b2
+  token: 0x0D19cc1c6dc90a312E80DF76068ff9FB518B8ab2
+  offer: 0x3005acb6Ca55A62161B2Cc94eFE80bcb1f827D8C
+  survey: 0x9807BF2C25586e86c14f968785c836d812757496
+  validator: 0x3C058e0792ddAB253f7f624A4C1B6878272d9fBa
+  forwarder: 0x4ec70b4070563089bAaB0b7d46c595aa16e467D6
+  engine: 0x798a58DDF63D69bc413cbdFD582Fb635B5168F18
+  timelock: 0x772dF3B2c52b85896236a286D278045f9Cda4942
+  governor: 0x8Fa2B81455112c61aA3821ac5D8124bb63623816
+  tokenLock: 0x1445A293cFB3FbEcb1c62eBf66B9F544b30438ed
+
+Success.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   12
+> Final cost:          0.058718542711386753 ETH

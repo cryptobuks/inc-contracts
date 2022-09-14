@@ -70,8 +70,7 @@ contract SurveyStorage is ISurveyStorage, SurveyBase, Manageable {
 
         totalGasReserve -= txPrice;
 
-        // TODO, si pudiera ir eliminando algunos, se otorga devolución de gas por ello
-        // deleting the value at a storage slot give a refund of 15,000 gas
+        // Save sample to calculate the following costs
         if(txGas > 0) {
             _txGasSamples.push(txGas);
         }
