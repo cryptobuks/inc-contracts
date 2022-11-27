@@ -1,6 +1,8 @@
 const INCToken = artifacts.require("INCToken");
 const TokenOffer = artifacts.require("TokenOffer");
+const SurveyConfig = artifacts.require("SurveyConfig");
 const SurveyStorage = artifacts.require("SurveyStorage");
+const SurveyFactory = artifacts.require("SurveyFactory");
 const SurveyValidator = artifacts.require("SurveyValidator");
 const SurveyEngine = artifacts.require("SurveyEngine");
 const INCForwarder = artifacts.require("INCForwarder");
@@ -18,7 +20,9 @@ module.exports = async function (deployer, network, accounts) {
 
   const incToken = await INCToken.deployed();
   const offer = await TokenOffer.deployed();
-  const surveyImpl = await SurveyStorage.deployed();
+  const surveyConfig = await SurveyConfig.deployed();
+  const surveyStorage = await SurveyStorage.deployed();
+  const surveyFactory = await SurveyFactory.deployed();
   const surveyValidator = await SurveyValidator.deployed();
   const forwarder = await INCForwarder.deployed();
   const surveyEngine = await SurveyEngine.deployed();
@@ -32,7 +36,9 @@ module.exports = async function (deployer, network, accounts) {
   console.log('  relayers: ' + relayers);
   console.log('  token: ' + incToken.address);
   console.log('  offer: ' + offer.address);
-  console.log('  survey: ' + surveyImpl.address);
+  console.log('  config: ' + surveyConfig.address);
+  console.log('  storage: ' + surveyStorage.address);
+  console.log('  factory: ' + surveyFactory.address);
   console.log('  validator: ' + surveyValidator.address);
   console.log('  forwarder: ' + forwarder.address);
   console.log('  engine: ' + surveyEngine.address);
@@ -43,10 +49,12 @@ module.exports = async function (deployer, network, accounts) {
   try {
     fs.writeFileSync('.deploy/abis/INCToken.json', JSON.stringify(INCToken.abi));
     fs.writeFileSync('.deploy/abis/TokenOffer.json', JSON.stringify(TokenOffer.abi));
-    fs.writeFileSync('.deploy/abis/SurveyValidator.json', JSON.stringify(SurveyValidator.abi));
+    fs.writeFileSync('.deploy/abis/SurveyConfig.json', JSON.stringify(SurveyConfig.abi));
     fs.writeFileSync('.deploy/abis/SurveyStorage.json', JSON.stringify(SurveyStorage.abi));
-    fs.writeFileSync('.deploy/abis/SurveyEngine.json', JSON.stringify(SurveyEngine.abi));
+    fs.writeFileSync('.deploy/abis/SurveyFactory.json', JSON.stringify(SurveyFactory.abi));
+    fs.writeFileSync('.deploy/abis/SurveyValidator.json', JSON.stringify(SurveyValidator.abi));
     fs.writeFileSync('.deploy/abis/INCForwarder.json', JSON.stringify(INCForwarder.abi));
+    fs.writeFileSync('.deploy/abis/SurveyEngine.json', JSON.stringify(SurveyEngine.abi));
     fs.writeFileSync('.deploy/abis/TimelockController.json', JSON.stringify(TimelockController.abi));
     fs.writeFileSync('.deploy/abis/INCGovernor.json', JSON.stringify(INCGovernor.abi));
     fs.writeFileSync('.deploy/abis/TokenLock.json', JSON.stringify(TokenLock.abi));

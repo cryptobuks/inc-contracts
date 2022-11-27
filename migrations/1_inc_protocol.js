@@ -1,11 +1,13 @@
-const INCToken = artifacts.require("INCToken");
+const SurveyConfig = artifacts.require("SurveyConfig");
 const SurveyStorage = artifacts.require("SurveyStorage");
+const SurveyFactory = artifacts.require("SurveyFactory");
 const SurveyValidator = artifacts.require("SurveyValidator");
-const SurveyEngine = artifacts.require("SurveyEngine");
 const INCForwarder = artifacts.require("INCForwarder");
+const SurveyEngine = artifacts.require("SurveyEngine");
 const IWETH = artifacts.require("IWETH");
 const StringUtils = artifacts.require("StringUtils");
 const IntUtils = artifacts.require("IntUtils");
+const TransferHelper = artifacts.require("TransferHelper");
 const { MAX_UINT256, CURRENCY_ADDRESS } = require("../constants");
 
 module.exports = async function (deployer, network, accounts) {
@@ -30,23 +32,30 @@ module.exports = async function (deployer, network, accounts) {
   await deployer.deploy(IntUtils);
   await deployer.link(IntUtils, SurveyValidator);
 
-  const incToken = await INCToken.deployed();
+  await deployer.deploy(TransferHelper);
+  await deployer.link(TransferHelper, SurveyEngine);
 
-  await deployer.deploy(SurveyStorage);
-  const surveyImpl = await SurveyStorage.deployed();
+  await deployer.deploy(SurveyFactory);
+  const surveyFactory = await SurveyFactory.deployed();
 
   await deployer.deploy(SurveyValidator);
   const surveyValidator = await SurveyValidator.deployed();
 
+  await deployer.deploy(SurveyConfig, surveyFactory.address, surveyValidator.address);
+  const surveyConfig = await SurveyConfig.deployed();
+
+  await deployer.deploy(SurveyStorage, surveyConfig.address);
+  const surveyStorage = await SurveyStorage.deployed();
+
   await deployer.deploy(INCForwarder);
   const forwarder = await INCForwarder.deployed();
 
-  await deployer.deploy(SurveyEngine, incToken.address, currencyAddress, surveyImpl.address, surveyValidator.address, forwarder.address);
+  await deployer.deploy(SurveyEngine, currencyAddress, surveyConfig.address, surveyStorage.address, forwarder.address);
   const surveyEngine = await SurveyEngine.deployed();
 
   // set managers
-  await surveyImpl.setManager(surveyEngine.address);
-  await surveyValidator.setManager(surveyEngine.address);
+  await surveyStorage.setManager(surveyEngine.address);
+  await surveyFactory.setManager(surveyStorage.address);
   await forwarder.setManager(custody);// set custody address for the gas reserve
 
   for (let relayer of relayers) {

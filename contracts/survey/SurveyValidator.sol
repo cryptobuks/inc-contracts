@@ -1,18 +1,21 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
-import "../abstractions/Manageable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/ISurveyValidator.sol";
 import {StringUtils} from "../libraries/StringUtils.sol";
 import {IntUtils} from "../libraries/IntUtils.sol";
 
-contract SurveyValidator is ISurveyValidator, Manageable {
+contract SurveyValidator is ISurveyValidator, Ownable {
 
     using StringUtils for *;
     using IntUtils for *;
 
-    uint256 public titleMaxLength = 255;
-    uint256 public descriptionMaxLength = 4096;
+    uint256 public tknSymbolMaxLength = 64;
+    uint256 public tknNameMaxLength = 128;
+    uint256 public titleMaxLength = 128;
+    uint256 public descriptionMaxLength = 512;
     uint256 public urlMaxLength = 2048;
     uint256 public startMaxTime = 2629743;// maximum time to start the survey
     uint256 public rangeMinTime = 86400;// minimum duration time
@@ -20,20 +23,40 @@ contract SurveyValidator is ISurveyValidator, Manageable {
     uint256 public questionMaxPerSurvey = 100;
     uint256 public questionMaxLength = 4096;
     uint256 public validatorMaxPerQuestion = 10;
-    uint256 public validatorValueMaxLength = 255;
+    uint256 public validatorValueMaxLength = 128;
     uint256 public hashMaxPerSurvey = 10000;
     uint256 public responseMaxLength = 4096;
 
     // ### Validation functions ###
 
-    function checkSurvey(Survey memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view virtual override {
+    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view override {
+        // Validate token metadata
+        try IERC20Metadata(survey.token).symbol() returns (string memory symbol) {
+            uint256 symbolLength = symbol.trim().toSlice().len();
+            require(symbolLength > 0, "SurveyValidator: empty token symbol");
+            require(symbolLength <= tknSymbolMaxLength, "SurveyValidator: invalid token symbol");
+        } catch {
+            revert("SurveyValidator: no token symbol");
+        }
+
+        try IERC20Metadata(survey.token).name() returns (string memory name) {
+            uint256 nameLength = name.trim().toSlice().len();
+            require(nameLength > 0, "SurveyValidator: empty token name");
+            require(nameLength <= tknNameMaxLength, "SurveyValidator: invalid token name");
+        } catch {
+            revert("SurveyValidator: no token name");
+        }
+        
         // Validate title
         uint256 titleLength = survey.title.toSlice().len();
+        require(titleLength == survey.title.trim().toSlice().len(), "SurveyValidator: title with leading or trailing spaces");
         require(titleLength > 0, "SurveyValidator: no survey title");
         require(titleLength <= titleMaxLength, "SurveyValidator: very long survey title");
 
         // Validate description
-        require(survey.description.toSlice().len() <= descriptionMaxLength, "SurveyValidator: very long survey description");
+        uint256 descLength = survey.description.toSlice().len();
+        require(descLength == survey.description.trim().toSlice().len(), "SurveyValidator: description with leading or trailing spaces");
+        require(descLength <= descriptionMaxLength, "SurveyValidator: very long survey description");
 
         // Validate logo URL
         require(bytes(survey.logoUrl).length <= urlMaxLength, "SurveyValidator: very long survey logo URL");
@@ -86,12 +109,11 @@ contract SurveyValidator is ISurveyValidator, Manageable {
         require(validators.length == validatorsTotal, "SurveyValidator: incorrect number of validators");
 
         for(uint i = 0; i < validators.length; i++) {
-            Validator memory validator = validators[i];
-            _checkValidator(questions[validator.questionIndex], validator);
+            _checkValidator(questions[validators[i].questionIndex], validators[i]);
         }
     }
 
-    function checkResponse(Question memory question, Validator[] memory validators, string memory response) external view virtual override {
+    function checkResponse(Question memory question, Validator[] memory validators, string memory response) external view override {
         uint256 responseLength = response.toSlice().len();
 
         if(responseLength == 0) {
@@ -99,6 +121,7 @@ contract SurveyValidator is ISurveyValidator, Manageable {
 			return;
         }
 
+        require(responseLength == response.trim().toSlice().len(), "SurveyValidator: response with leading or trailing spaces");
         require(responseLength <= responseMaxLength, "SurveyValidator: response too long");
         require(_checkResponseType(question.responseType, response), "SurveyValidator: invalid response type");
         
@@ -106,18 +129,16 @@ contract SurveyValidator is ISurveyValidator, Manageable {
         string[] memory values = _parseResponse(question.responseType, response);
 
         for(uint i = 0; i < values.length; i++) {
-            string memory value = values[i];
+            require(values[i].toSlice().len() == values[i].trim().toSlice().len(), "SurveyValidator: value with leading or trailing spaces");
             bool valid = true;
 
             for(uint j = 0; j < validators.length; j++) {
-               Validator memory validator = validators[j];
-
                if(j == 0) {
-                   valid = _checkExpression(validator, value);
+                   valid = _checkExpression(validators[j], values[i]);
                } else if(validators[j - 1].operator == Operator.Or) {
-                    valid = valid || _checkExpression(validator, value);
+                    valid = valid || _checkExpression(validators[j], values[i]);
                 } else {// operator == None or And
-                    valid = valid && _checkExpression(validator, value);
+                    valid = valid && _checkExpression(validators[j], values[i]);
                 }
             }
 
@@ -125,32 +146,23 @@ contract SurveyValidator is ISurveyValidator, Manageable {
         }
     }
 
-    // ### Manager functions ###
+    function isLimited(ResponseType responseType) external pure override returns (bool) {
+        return _isLimited(responseType);
+    }
 
-    function checkAuthorization(string[] memory hashes, string memory key) external view override onlyManager returns (uint256) {
-        bool authorized = false;
-        uint256 hashIndex;
-
-        if(hashes.length > 0) {
-            bytes32 hash = keccak256(abi.encodePacked(key));
-            string memory hashStr = uint256(hash).toHexString(32);
-            uint256 length = hashStr.toSlice().len();
-            StringUtils.slice memory result = hashStr.substring(2, 6).toSlice().concat(hashStr.substring(length-4, length).toSlice()).toSlice();
-
-            for(uint i = 0; i < hashes.length; i++) {
-                if(hashes[i].toSlice().equals(result)) {
-                    authorized = true;
-                    hashIndex = i;
-                    break;
-                }
-            }
-        }
-
-        require(authorized, "SurveyValidator: participation unauthorized");
-        return hashIndex;
+    function isArray(ResponseType responseType) external pure override returns (bool) {
+        return _isArray(responseType);
     }
 
     // ### Owner functions ###
+
+    function setTknSymbolMaxLength(uint256 _tknSymbolMaxLength) external override onlyOwner {
+        tknSymbolMaxLength = _tknSymbolMaxLength;
+    }
+
+    function setTknNameMaxLength(uint256 _tknNameMaxLength) external override onlyOwner {
+        tknNameMaxLength = _tknNameMaxLength;
+    }
 
     function setTitleMaxLength(uint256 _titleMaxLength) external override onlyOwner {
         titleMaxLength = _titleMaxLength;
@@ -203,9 +215,10 @@ contract SurveyValidator is ISurveyValidator, Manageable {
     // ### Internal functions ###
 
     function _checkQuestion(Question memory question) internal view {
-        uint256 length = question.content.toSlice().len();
-        require(length > 0, "SurveyValidator: unspecified question content");
-        require(length <= questionMaxLength, "SurveyValidator: very long question content");
+        uint256 contentLength = question.content.toSlice().len();
+        require(contentLength == question.content.trim().toSlice().len(), "SurveyValidator: question content with leading or trailing spaces");
+        require(contentLength > 0, "SurveyValidator: unspecified question content");
+        require(contentLength <= questionMaxLength, "SurveyValidator: very long question content");
     }
 
     function _checkValidator(Question memory question, Validator memory validator) internal view {
@@ -213,6 +226,7 @@ contract SurveyValidator is ISurveyValidator, Manageable {
 
         if(validator.expression != Expression.Empty && validator.expression != Expression.NotEmpty && 
            validator.expression != Expression.ContainsDigits && validator.expression != Expression.NotContainsDigits) {
+                require(validatorValueLength == validator.value.trim().toSlice().len(), "SurveyValidator: validator value with leading or trailing spaces");
                 require(validatorValueLength > 0 && validatorValueLength <= validatorValueMaxLength, "SurveyValidator: invalid validator value");
 
                 if(validator.expression == Expression.Greater || validator.expression == Expression.GreaterEquals || 
@@ -244,6 +258,15 @@ contract SurveyValidator is ISurveyValidator, Manageable {
         }
 
         return values;
+    }
+
+    function _isLimited(ResponseType responseType) internal pure returns (bool) {
+        return responseType == ResponseType.Bool || 
+        responseType == ResponseType.Percent || 
+        responseType == ResponseType.Rating || 
+        responseType == ResponseType.OneOption || 
+        responseType == ResponseType.ManyOptions || 
+        responseType == ResponseType.ArrayBool;
     }
 
     function _isArray(ResponseType responseType) internal pure returns (bool) {
@@ -280,11 +303,15 @@ contract SurveyValidator is ISurveyValidator, Manageable {
             uint256 num = value.parseUInt();
             return num > 0 && num <= 5;
         } else if(responseType == ResponseType.OneOption) {
-            return value.isUDigit();
+            if(!value.isUDigit()) {
+                return false;
+            }
+
+            return value.parseUInt() <= 100;
         } else if(responseType == ResponseType.ManyOptions) {
             string[] memory array = value.split(";");
             for(uint i = 0; i < array.length; i++) {
-                if(!array[i].isUDigit()) {
+                if(!_checkResponseType(ResponseType.OneOption, array[i])) {
                     return false;
                 }
             }

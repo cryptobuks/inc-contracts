@@ -19,9 +19,7 @@ interface ISurveyModel {
         ResponseType responseType;
     }
 
-    struct Survey {
-        uint256 id;
-        uint256 entryTime;
+    struct SurveyRequest {
         string title;
         string description;
         string logoUrl;
@@ -29,36 +27,40 @@ interface ISurveyModel {
         uint256 endTime;
         uint256 budget;// Total budget of INC tokens
         uint256 reward;// Reward amount for participation
+        address token;// Incentive token
+    }
+
+    struct SurveyWrapper {
+        address account;
+        SurveyRequest survey;
+        Question[] questions;
+        Validator[] validators;
+        string[] hashes;
+        uint256 gasReserve;
+    }
+
+    struct Survey {
+        string title;
+        string description;
+        string logoUrl;
+        uint256 startTime;
+        uint256 endTime;
+        uint256 budget;
+        uint256 reward;
+        address token;
+        uint256 entryTime;
+        address account;
+        bool keyRequired;
+        address addr;
     }
 
     struct Participation {
-        uint256 surveyId;
-        uint256 entryTime;
+        address surveyAddr;
         string[] responses;
-        uint256 txGas;// Only available for financed transactions
+        uint256 txGas;
+        uint256 entryTime;
         uint256 gasPrice;
-    }
-
-    struct SurveyData {
-        address owner;
-        address[] participants;
-        uint256 remainingBudget;
-        uint256 gasReserve;// Remaining gas reserve to pay participations
-        string[] hashes;// Available participation hashes (not used)
-        bool keyRequired;
-    }
-
-    struct SurveyFilter {
-        string search;// Search in title or description
-        bool onlyPublic;// No coupon required
-        bool withRmngBudget;// With budget greater than or equal to the reward
-        uint256 minStartTime;
-        uint256 maxStartTime;
-        uint256 minEndTime;
-        uint256 maxEndTime;
-        uint256 minBudget;
-        uint256 minReward;
-        uint256 minGasReserve;
+        address account;
     }
 
     enum Operator {
@@ -92,5 +94,10 @@ interface ISurveyModel {
         Operator operator;
         Expression expression;
         string value;
+    }
+
+    struct ResponseCount {
+        string value;
+        uint256 count;
     }
 }

@@ -5,21 +5,21 @@ pragma solidity ^0.8.0;
 import "./ISurveyModel.sol";
 
 /**
- * @dev Interface to implement a validable survey contract
+ * @dev Interface to implement a survey validation contract
  */
 interface ISurveyValidator is ISurveyModel {
 
     // ### Validation functions ###
 
-    function checkSurvey(Survey memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view;
+    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view;
     function checkResponse(Question memory question, Validator[] memory validators, string memory response) external view;
-
-    // ### Manager functions `onlyManager` ###
-    
-    function checkAuthorization(string[] memory hashes, string memory key) external view returns (uint256);
+    function isLimited(ResponseType responseType) external returns (bool);
+    function isArray(ResponseType responseType) external returns (bool);
 
     // ### Owner functions `onlyOwner` ###
 
+    function setTknSymbolMaxLength(uint256 tknSymbolMaxLength) external;
+    function setTknNameMaxLength(uint256 tknNameMaxLength) external;
     function setTitleMaxLength(uint256 titleMaxLength) external;
     function setDescriptionMaxLength(uint256 descriptionMaxLength) external;
     function setUrlMaxLength(uint256 urlMaxLength) external;

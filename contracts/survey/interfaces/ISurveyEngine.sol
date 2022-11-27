@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: BUSL-1.1
-
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../../interfaces/IWETH.sol";
 import "./ISurveyStorage.sol";
-import "./ISurveyValidator.sol";
+import "./ISurveyConfig.sol";
 import "./ISurveyModel.sol";
 
 /**
@@ -13,14 +11,38 @@ import "./ISurveyModel.sol";
  */
  interface ISurveyEngine is ISurveyModel {
 
-    function tokenCnt() external view returns (IERC20);
-    function currencyCnt() external view returns (IWETH);
-    function surveyCnt() external view returns (ISurveyStorage);
-    function validatorCnt() external view returns (ISurveyValidator);
+   event OnSurveyAdded(
+        address indexed owner,
+        address surveyAddr
+    );
 
-    function addSurvey(Survey memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external payable returns (uint256);
-    function solveSurvey(uint256 surveyId) external returns (bool);
-    function increaseGasReserve(uint256 surveyId) external payable returns (bool);
-    function addParticipation(uint256 surveyId, string[] memory responses, string memory key) external;
-    function addParticipationFromForwarder(uint256 surveyId, string[] memory responses, string memory key, uint256 txGas) external;
+    event OnSurveySolved(
+        address indexed owner,
+        address surveyAddr,
+        uint256 budgetRefund,
+        uint256 gasRefund
+    );
+
+    event OnGasReserveIncreased(
+        address indexed owner,
+        address surveyAddr,
+        uint256 gasAdded,
+        uint256 gasReserve
+    );
+
+    event OnParticipationAdded(
+        address indexed participant,
+        address surveyAddr,
+        uint256 txGas
+    );
+
+    function currencyCnt() external view returns (IWETH);
+    function storageCnt() external view returns (ISurveyStorage);
+    function configCnt() external view returns (ISurveyConfig);
+
+    function addSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external payable;
+    function solveSurvey(address surveyAddr) external;
+    function increaseGasReserve(address surveyAddr) external payable;
+    function addParticipation(address surveyAddr, string[] memory responses, string memory key) external;
+    function addParticipationFromForwarder(address surveyAddr, string[] memory responses, string memory key, uint256 txGas) external;
  }

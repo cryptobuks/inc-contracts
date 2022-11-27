@@ -42,9 +42,11 @@ library StringUtils {
         uint _ptr;
     }
 
-    function memcpy(uint dest, uint src, uint len_) private pure {
+    bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
+
+    function memcpy(uint dest, uint src, uint _len) private pure {
         // Copy word-length chunks while possible
-        for(; len_ >= 32; len_ -= 32) {
+        for(; _len >= 32; _len -= 32) {
             assembly {
                 mstore(dest, mload(src))
             }
@@ -53,7 +55,10 @@ library StringUtils {
         }
 
         // Copy remaining bytes
-        uint mask = 256 ** (32 - len_) - 1;
+        uint mask = type(uint).max;
+        if (_len > 0) {
+            mask = 256 ** (32 - _len) - 1;
+        }
         assembly {
             let srcpart := and(mload(src), not(mask))
             let destpart := and(mload(dest), mask)
@@ -83,23 +88,23 @@ library StringUtils {
         uint ret;
         if (self == 0)
             return 0;
-        if (self & bytes32(uint(0xffffffffffffffffffffffffffffffff)) == 0) {
+        if (uint(self) & type(uint128).max == 0) {
             ret += 16;
             self = bytes32(uint(self) / 0x100000000000000000000000000000000);
         }
-        if (self & bytes32(uint(0xffffffffffffffff)) == 0) {
+        if (uint(self) & type(uint64).max == 0) {
             ret += 8;
             self = bytes32(uint(self) / 0x10000000000000000);
         }
-        if (self & bytes32(uint(0xffffffff)) == 0) {
+        if (uint(self) & type(uint32).max == 0) {
             ret += 4;
             self = bytes32(uint(self) / 0x100000000);
         }
-        if (self & bytes32(uint(0xffff)) == 0) {
+        if (uint(self) & type(uint16).max == 0) {
             ret += 2;
             self = bytes32(uint(self) / 0x10000);
         }
-        if (self & bytes32(uint(0xff)) == 0) {
+        if (uint(self) & type(uint8).max == 0) {
             ret += 1;
         }
         return 32 - ret;
@@ -203,21 +208,23 @@ library StringUtils {
         uint selfptr = self._ptr;
         uint otherptr = other._ptr;
         for (uint idx = 0; idx < shortest; idx += 32) {
-            int a;
-            int b;
+            uint a;
+            uint b;
             assembly {
                 a := mload(selfptr)
                 b := mload(otherptr)
             }
             if (a != b) {
                 // Mask out irrelevant bytes and check again
-                int mask = -1; // 0xffff...
+                uint mask = type(uint).max; // 0xffff...
                 if(shortest < 32) {
-                  mask = int(~(2 ** (8 * (32 - shortest + idx)) - 1));
+                  mask = ~(2 ** (8 * (32 - shortest + idx)) - 1);
                 }
-                int diff = int(a & mask) - int(b & mask);
-                if (diff != 0)
-                    return int(diff);
+                unchecked {
+                    uint diff = (a & mask) - (b & mask);
+                    if (diff != 0)
+                        return int(diff);
+                }
             }
             selfptr += 32;
             otherptr += 32;
@@ -467,7 +474,10 @@ library StringUtils {
 
         if (needlelen <= selflen) {
             if (needlelen <= 32) {
-                bytes32 mask = bytes32(~(2 ** (8 * (32 - needlelen)) - 1));
+                bytes32 mask;
+                if (needlelen > 0) {
+                    mask = bytes32(~(2 ** (8 * (32 - needlelen)) - 1));
+                }
 
                 bytes32 needledata;
                 assembly { needledata := and(mload(needleptr), mask) }
@@ -507,7 +517,10 @@ library StringUtils {
 
         if (needlelen <= selflen) {
             if (needlelen <= 32) {
-                bytes32 mask = bytes32(~(2 ** (8 * (32 - needlelen)) - 1));
+                bytes32 mask;
+                if (needlelen > 0) {
+                    mask = bytes32(~(2 ** (8 * (32 - needlelen)) - 1));
+                }
 
                 bytes32 needledata;
                 assembly { needledata := and(mload(needleptr), mask) }
@@ -819,8 +832,6 @@ library StringUtils {
         }
     }
 
-    bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
-
     function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
         bytes memory buffer = new bytes(2 * length + 2);
         buffer[0] = "0";
@@ -840,6 +851,68 @@ library StringUtils {
             result[i-startIndex] = strBytes[i];
         }
         return string(result);
+    }
+
+    function ltrim(string memory _in) internal pure returns (string memory) {
+        bytes memory _inArr = bytes(_in);
+        uint256 _inArrLen = _inArr.length;
+        if (_inArrLen == 0)
+            return "";
+        
+        uint256 _start = _inArrLen;
+        // Find the index of the first non-whitespace character
+        for (uint256 i = 0; i < _inArrLen; i++) {
+            bytes1 _char = _inArr[i];
+            if (
+                _char != 0x20 && // space
+                _char != 0x09 && // tab
+                _char != 0x0a && // line feed
+                _char != 0x0D && // carriage return
+                _char != 0x0B && // vertical tab
+                _char != 0x00 // null
+            ) {
+                _start = i;
+                break;
+            }
+        }
+        bytes memory _outArr = new bytes(_inArrLen - _start);
+        for (uint256 i = _start; i < _inArrLen; i++) {
+            _outArr[i - _start] = _inArr[i];
+        }
+        return string(_outArr);
+    }
+
+    function rtrim(string memory _in) internal pure returns (string memory) {
+        bytes memory _inArr = bytes(_in);
+        uint256 _inArrLen = _inArr.length;
+        if (_inArrLen == 0)
+            return "";
+        
+        uint256 _length;
+        // Find the index of the last non-whitespace character
+        for (uint256 i = _inArrLen; i > 0; i--) {
+            bytes1 _char = _inArr[i-1];
+            if (
+                _char != 0x20 && // space
+                _char != 0x09 && // tab
+                _char != 0x0a && // line feed
+                _char != 0x0D && // carriage return
+                _char != 0x0B && // vertical tab
+                _char != 0x00 // null
+            ) {
+                _length = i;
+                break;
+            }
+        }
+        bytes memory _outArr = new bytes(_length);
+        for (uint256 i = 0; i < _length; i++) {
+            _outArr[i] = _inArr[i];
+        }
+        return string(_outArr);
+    }
+
+    function trim(string memory _in) internal pure returns (string memory) {
+        return ltrim(rtrim(_in));
     }
 
     // ### Private functions ###

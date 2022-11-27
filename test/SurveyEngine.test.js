@@ -9,7 +9,7 @@ const sign = require("./shared/sign");
 const { HOUR_SECONDS } = require("../constants");
 const { bufferToHex, privateToAddress, toBuffer } = require('ethereumjs-util');
 const { toChecksumAddress } = require('web3-utils');
-const NewEngine = artifacts.require('NewEngine');
+const SurveyImpl = artifacts.require('SurveyImpl');
 
 contract('SurveyEngine', accounts => {
 
@@ -27,11 +27,13 @@ contract('SurveyEngine', accounts => {
 
     before(async () => {
         savedSurvey = cmn.clone(impl.survey);
-
         // Reduce the number of participations to 2
         impl.survey.reward = cmn.toBN(impl.survey.budget).divn(2).toString();
         
         await impl.init(accounts);
+
+        // Set token address
+        savedSurvey.token = impl.survey.token;
     });
 
     after(async () => {
@@ -54,13 +56,12 @@ contract('SurveyEngine', accounts => {
         txGas = await impl.getAvgTxGas();
         gasReserve = impl.gasPrice.mul(txGas).muln(impl.maxParts);
         const weiForSurvey = gasReserve.add(impl.fee);// gas reserve + fee
-
         const result = await impl.engineInstance.addSurvey(impl.survey, impl.questions, impl.validators, partHashes, { from: impl.creator, value: weiForSurvey });
 
         // Advance the time for the survey to be open
         await time.increase(HOUR_SECONDS);
 
-        return result;
+        return result.logs[1].args.surveyAddr;
     };
 
     it('Check signers', async () => {
@@ -74,25 +75,25 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Create survey', async () => {
-        const result = await addSurvey();
-        assert(result.receipt.status);
+        const surveyAddr = await addSurvey();
+        assert(surveyAddr);
 
         // Get own survey
-        const ownSurvey = (await impl.surveyInstance.getOwnSurveys(0, 1, { from: impl.creator }))[0];
-        impl.checkSurvey(ownSurvey, 1);
+        const ownSurvey = (await impl.storageInstance.getOwnSurveys(0, 1, { from: impl.creator }))[0];
+        impl.checkSurvey(ownSurvey, surveyAddr);
 
-        // Get survey by ID
-        const mSurvey = await impl.surveyInstance.findSurvey(1);
-        impl.checkSurvey(mSurvey, 1);
+        // Get survey by address
+        const mSurvey = await impl.storageInstance.findSurvey(surveyAddr);
+        impl.checkSurvey(mSurvey, surveyAddr);
 
         // Get questions
-        const mQuestions = await impl.surveyInstance.getQuestions(1, 0, impl.questions.length);
+        const mQuestions = await impl.storageInstance.getQuestions(surveyAddr, 0, impl.questions.length);
         for (let i = 0; i < impl.questions.length; i++) {
             impl.checkQuestion(mQuestions[i], i);
         }
 
         // Get first question validators
-        const mValidators = await impl.surveyInstance.getValidators(1, 0);
+        const mValidators = await impl.storageInstance.getValidators(surveyAddr, 0);
 
         for (let i = 0, j = 0; i < impl.validators.length; i++) {
             let validator = impl.validators[i];
@@ -113,39 +114,35 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Add participation assuming the gas', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
-        let result = await impl.engineInstance.addParticipation(1, impl.part1.responses, partKey1, { from: impl.user1 });
+        let result = await impl.engineInstance.addParticipation(surveyAddr, impl.part1.responses, partKey1, { from: impl.user1 });
         assert(result.receipt.status);
 
         // Add participation 2. using new participant & new partKey
-        result = await impl.engineInstance.addParticipation(1, impl.part2.responses, partKey2, { from: impl.user2 });
+        result = await impl.engineInstance.addParticipation(surveyAddr, impl.part2.responses, partKey2, { from: impl.user2 });
         assert(result.receipt.status);
 
         // Get participation
-        let participation = (await impl.surveyInstance.getParticipations(1, 0, 1))[0];
-        assert(participation.surveyId == 1);
-        //cmn.log("Participation by survey ID and participation index: " + participation);
+        let participation = (await impl.storageInstance.getParticipations(surveyAddr, 0, 1))[0];
+        assert(participation.surveyAddr == surveyAddr);
 
-        let ownParticipation = (await impl.surveyInstance.getOwnParticipations(0, 1, { from: impl.user1 }))[0];
-        assert(ownParticipation.surveyId == 1);
-        //cmn.log("ownParticipation by index: " + ownParticipation);
+        let ownParticipation = (await impl.storageInstance.getOwnParticipations(0, 1, { from: impl.user1 }))[0];
+        assert(ownParticipation.surveyAddr == surveyAddr);
 
-        ownParticipation = await impl.surveyInstance.findOwnParticipation(1, { from: impl.user2 });
-        assert(ownParticipation.surveyId == 1);
-        //cmn.log("ownParticipation by survey ID: " + ownParticipation);
+        ownParticipation = await impl.storageInstance.findOwnParticipation(surveyAddr, { from: impl.user2 });
+        assert(ownParticipation.surveyAddr == surveyAddr);
     });
 
     it('Add participation without paying gas', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
-        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part1.responses, partKey1, txGas).encodeABI();
+        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
         const devChainId = 1;
 
         let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
-        //cmn.log('signature: ' + signature);
 
         // Execute meta-transaction
         let result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
@@ -155,27 +152,24 @@ contract('SurveyEngine', accounts => {
         const nonce2 = await impl.forwarderInstance.getNonce(impl.user2);
         request.nonce = Number(nonce2);
         request.from = impl.user2;
-        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part2.responses, partKey2, txGas).encodeABI();
+        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, partKey2, txGas).encodeABI();
         signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
 
         result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
         assert(result.receipt.status);
 
         // Get participation
-        let participation = (await impl.surveyInstance.getParticipations(1, 0, 1))[0];
-        assert(participation.surveyId == 1);
-        //cmn.log("Participation by survey ID and participation index: " + participation);
+        let participation = (await impl.storageInstance.getParticipations(surveyAddr, 0, 1))[0];
+        assert(participation.surveyAddr == surveyAddr);
 
-        let ownParticipation = (await impl.surveyInstance.getOwnParticipations(0, 1, { from: impl.user1 }))[0];
-        assert(ownParticipation.surveyId == 1);
-        //cmn.log("ownParticipation by index: " + ownParticipation);
+        let ownParticipation = (await impl.storageInstance.getOwnParticipations(0, 1, { from: impl.user1 }))[0];
+        assert(ownParticipation.surveyAddr == surveyAddr);
 
-        ownParticipation = await impl.surveyInstance.findOwnParticipation(1, { from: impl.user2 });
-        assert(ownParticipation.surveyId == 1);
-        //cmn.log("ownParticipation by survey ID: " + ownParticipation);
+        ownParticipation = await impl.storageInstance.findOwnParticipation(surveyAddr, { from: impl.user2 });
+        assert(ownParticipation.surveyAddr == surveyAddr);
 
         // Check meta-transaction gas samples
-        const samples = await impl.surveyInstance.txGasSamples(100);
+        const samples = await impl.storageInstance.txGasSamples(100);
         assert(samples.length == 2);
 
         const total = samples.reduce((a, b) => parseInt(a) + parseInt(b), 0);
@@ -184,10 +178,10 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Add participation from No Forwarder', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
         try {
-            await impl.engineInstance.addParticipationFromForwarder(1, impl.part1.responses, partKey1, txGas);
+            await impl.engineInstance.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas);
             assert.fail();
         } catch (e) {
             assert(e.message.indexOf('Forwardable: caller is not the forwarder') != -1);
@@ -195,9 +189,9 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Execute meta-transaction from non-whitelisted address', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
-        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part1.responses, partKey1, txGas).encodeABI();
+        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
         const devChainId = 1;
@@ -214,9 +208,9 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Participate 2 times in the same survey', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
-        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part1.responses, partKey1, txGas).encodeABI();
+        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
         const devChainId = 1;
@@ -240,9 +234,9 @@ contract('SurveyEngine', accounts => {
     });
 
     it('Participate with invalid key', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
-        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part1.responses, partKey1, txGas).encodeABI();
+        const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
         const devChainId = 1;
@@ -256,47 +250,47 @@ contract('SurveyEngine', accounts => {
         const nonce2 = await impl.forwarderInstance.getNonce(impl.user2);
         request.nonce = Number(nonce2);
         request.from = impl.user2;
-        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part2.responses, partKey1, txGas).encodeABI();
+        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, partKey1, txGas).encodeABI();
         signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
 
         try {
             await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
             assert.fail();
         } catch (e) {
-            assert(e.message.indexOf('SurveyValidator: participation unauthorized') != -1);
+            assert(e.message.indexOf('SurveyImpl: participation unauthorized') != -1);
         }
 
         // Try add participation 2, without partKey
-        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(1, impl.part2.responses, '', txGas).encodeABI();
+        request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, '', txGas).encodeABI();
         signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
 
         try {
             await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
             assert.fail();
         } catch (e) {
-            assert(e.message.indexOf('SurveyValidator: participation unauthorized') != -1);
+            assert(e.message.indexOf('SurveyImpl: participation unauthorized') != -1);
         }
     });
 
     it('Increase Gas Reserve', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
         // Check gas reserve
-        const mGasReserve = await impl.surveyInstance.gasReserveOf(1);
+        const mGasReserve = await impl.storageInstance.remainingGasReserveOf(surveyAddr);
         assert(cmn.toBN(mGasReserve).eq(gasReserve));
 
         // Increase gas reserve
         const extraGasReserve = cmn.toUnits(1);
-        const result = await impl.engineInstance.increaseGasReserve(1, { from: impl.creator, value: extraGasReserve });
+        const result = await impl.engineInstance.increaseGasReserve(surveyAddr, { from: impl.creator, value: extraGasReserve });
         assert(result.receipt.status);
 
         // Check the gas reserve again
-        const newGasReserve = await impl.surveyInstance.gasReserveOf(1);
+        const newGasReserve = await impl.storageInstance.remainingGasReserveOf(surveyAddr);
         assert(cmn.toBN(newGasReserve).eq(gasReserve.add(cmn.toBN(extraGasReserve))));
     });
 
     it('Solve survey', async () => {
-        await addSurvey();
+        const surveyAddr = await addSurvey();
 
         const creatorETHBalanceBefore = await web3.eth.getBalance(impl.creator);
         const creatorINCBalanceBefore = await impl.tokenInstance.balanceOf(impl.creator);
@@ -306,7 +300,7 @@ contract('SurveyEngine', accounts => {
         assert(cmn.toBN(engineINCBalanceBefore).eq(cmn.toBN(impl.survey.budget)));
 
         // Solve the survey
-        const result = await impl.engineInstance.solveSurvey(1, { from: impl.creator });
+        const result = await impl.engineInstance.solveSurvey(surveyAddr, { from: impl.creator });
         assert(result.receipt.status);
 
         const creatorETHBalanceAfter = await web3.eth.getBalance(impl.creator);
@@ -325,24 +319,12 @@ contract('SurveyEngine', accounts => {
         assert(engineINCBalanceAfter == 0);
 
         // Check remaining budget
-        const remainingBudget = await impl.surveyInstance.remainingBudgetOf(1);
+        const remainingBudget = await impl.storageInstance.remainingBudgetOf(surveyAddr);
         assert(remainingBudget == 0);
 
         // Check gas reserve
-        const mGasReserve = await impl.surveyInstance.gasReserveOf(1);
+        const mGasReserve = await impl.storageInstance.remainingGasReserveOf(surveyAddr);
         assert(mGasReserve == 0);
-    });
-
-    it('Migrate', async () => {
-        await addSurvey();
-
-        // Migrate to the new engine
-        const newEngineInstance = await NewEngine.new(impl.tokenInstance.address, impl.currencyInstance.address, impl.surveyInstance.address);
-        const result = await impl.engineInstance.migrate(newEngineInstance.address);
-        assert(result.receipt.status);
-
-        const newEngineBalance = await impl.tokenInstance.balanceOf(newEngineInstance.address);
-        assert(newEngineBalance.eq(cmn.toBN(impl.survey.budget)));
     });
 
 });

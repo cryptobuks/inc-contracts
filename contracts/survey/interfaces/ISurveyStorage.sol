@@ -1,29 +1,71 @@
 // SPDX-License-Identifier: BUSL-1.1
-
 pragma solidity ^0.8.0;
 
-import "./ISurveyBase.sol";
+import "./ISurveyModel.sol";
+import "./ISurveyConfig.sol";
 
 /**
- * @dev Interface to implement a survey contract
+ * @dev Interface to implement the survey storage
  */
-interface ISurveyStorage is ISurveyBase {
+interface ISurveyStorage is ISurveyModel {
 
-    // ### Manager functions `onlyManager` ###
+    function configCnt() external view returns (ISurveyConfig);
+    function totalGasReserve() external view returns (uint256);
+    function txGasSamples(uint256 maxLength) external view returns (uint256[] memory);
+    function remainingBudgetOf(address surveyAddr) external view returns (uint256);
+    function remainingGasReserveOf(address surveyAddr) external view returns (uint256);
+    function amountsOf(address surveyAddr) external view returns (uint256, uint256, uint256);
 
-    function getAllHashes(uint256 surveyId) external view returns (string[] memory);
-    function getAllQuestions(uint256 surveyId) external view returns (Question[] memory);
-    function saveSurvey(address account, Survey memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes, uint256 gasReserve) external returns (uint256);
-    function saveParticipation(address account, uint256 surveyId, string[] memory responses, uint256 reward, uint256 txGas, uint256 hashIndex) external;
-    function solveSurvey(uint256 surveyId) external;
-    function increaseGasReserve(uint256 surveyId, uint256 amount) external;
+    // ### Surveys ###
 
-    // ### Owner functions `onlyOwner` ###
+    function exists(address surveyAddr) external view returns (bool);
+    function getSurveysLength() external view returns (uint256);
+    function getAddresses(uint256 cursor, uint256 length) external view returns (address[] memory);
+    function getSurveys(uint256 cursor, uint256 length) external view returns (Survey[] memory);
+    function findSurvey(address surveyAddr) external view returns (Survey memory);
+    function isOpenedSurvey(address surveyAddr, uint256 offset) external view returns (bool);
 
-    function setSurveyMaxPerRequest(uint256 surveyMaxPerRequest) external;
-    function setParticipantMaxPerRequest(uint256 participantMaxPerRequest) external;
-    function setParticipationMaxPerRequest(uint256 participationMaxPerRequest) external;
-    function setQuestionMaxPerRequest(uint256 questionMaxPerRequest) external;
-    function setResponseMaxPerRequest(uint256 responseMaxPerRequest) external;
-    function setTxGasMaxPerRequest(uint256 txGasMaxPerRequest) external;
+    // ### Own Surveys ###
+
+    function getOwnSurveysLength() external view returns (uint256);
+    function getOwnSurveys(uint256 cursor, uint256 length) external view returns (Survey[] memory);
+
+    // ### Questions ###
+
+    function getQuestionsLength(address surveyAddr) external view returns (uint256) ;
+    function getQuestions(address surveyAddr, uint256 cursor, uint256 length) external view returns (Question[] memory);
+
+    // ### Validators ###
+
+    function getValidatorsLength(address surveyAddr, uint256 questionIndex) external view returns (uint256);
+    function getValidators(address surveyAddr, uint256 questionIndex) external view returns (Validator[] memory);
+
+    // ### Participants ###
+
+    function getParticipantsLength(address surveyAddr) external view returns (uint256);
+    function getParticipants(address surveyAddr, uint256 cursor, uint256 length) external view returns (address[] memory);
+    function isParticipant(address surveyAddr, address account) external view returns (bool);
+
+    // ### Participations ###
+
+    function getParticipations(address surveyAddr, uint256 cursor, uint256 length) external view returns (Participation[] memory);
+    function findParticipation(address surveyAddr, address account) external view returns (Participation memory);
+
+    // ### Own Participations ###
+
+    function getOwnParticipationsLength() external view returns (uint256);
+    function getOwnParticipations(uint256 cursor, uint256 length) external view returns (Participation[] memory);
+    function findOwnParticipation(address surveyAddr) external view returns (Participation memory);
+
+    // ### Responses ###
+
+    function getResponses(address surveyAddr, uint256 questionIndex, uint256 cursor, uint256 length) external view returns (string[] memory);
+    function getResponseCounts(address surveyAddr, uint256 questionIndex) external view returns (ResponseCount[] memory);
+
+    // ### Manager functions ###
+
+    function addSurvey(SurveyWrapper calldata wrapper) external returns (address);
+    function addParticipation(Participation calldata participation, string calldata key) external;
+    function solveSurvey(address surveyAddr) external;
+    function increaseGasReserve(address surveyAddr, uint256 amount) external;
 }

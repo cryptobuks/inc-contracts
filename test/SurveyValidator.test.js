@@ -1,17 +1,30 @@
 const cmn = require("./shared/common");
 const impl = require("./shared/contracts-impl");
+const ERC20Test = artifacts.require('ERC20Test');
 
 contract('SurveyValidator', (accounts) => {
 
-  const user1 = accounts[1];
   const partHashes = ['8e6e4f84', '075e4130'];
-  const partKey1 = '41f61133-1ef0-45d3-ad25-79520feef388';
-  const partKey2 = '03aedda1-5b0b-47a7-a043-05ce7c1ed11b';
 
+  let tokenInstance;
+  let unsupTokenInstance1;
+  let unsupTokenInstance2;
+  let unsupTokenInstance3;
   let validatorInstance;
 
-  beforeEach(async () => {
+  before(async () => {
+    tokenInstance = await cmn.newINCToken();
+    unsupTokenInstance1 = await ERC20Test.new('', '', cmn.tokenTotal);
+    unsupTokenInstance2 = await ERC20Test.new('token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name token name', 'token symbol', cmn.tokenTotal);
+    unsupTokenInstance3 = await ERC20Test.new('token name', 'token symbol token symbol token symbol token symbol token symbol token symbol token symbol token symbol', cmn.tokenTotal);
     validatorInstance = await cmn.newSurveyValidator();
+    // Set token address
+    impl.survey.token = tokenInstance.address;
+  });
+
+  after(async () => {
+    // Revert token address
+    impl.survey.token = tokenInstance.address;
   });
 
   it('checkSurvey', async () => {
@@ -57,16 +70,43 @@ contract('SurveyValidator', (accounts) => {
     }
   });
 
-  it('checkAuthorization', async () => {
-    const manager = await validatorInstance.manager();
-    await validatorInstance.checkAuthorization(partHashes, partKey1, { from: manager });
-    await validatorInstance.checkAuthorization(partHashes, partKey2, { from: manager });
+  it('checkSurvey with unsupported token', async () => {
+    impl.survey.token = unsupTokenInstance1.address;
 
     try {
-      await validatorInstance.checkAuthorization(partHashes, partKey1, { from: user1 });
+      await validatorInstance.checkSurvey(impl.survey, impl.questions, impl.validators, partHashes);
       assert.fail();
     } catch (e) {
-      assert(e.message.indexOf('Manageable: caller is not the manager') != -1);
+      assert(e.message.indexOf('SurveyValidator: empty token symbol') != -1);
+    }
+
+    impl.survey.token = unsupTokenInstance2.address;
+
+    try {
+      await validatorInstance.checkSurvey(impl.survey, impl.questions, impl.validators, partHashes);
+      assert.fail();
+    } catch (e) {
+      assert(e.message.indexOf('SurveyValidator: invalid token name') != -1);
+    }
+
+    impl.survey.token = unsupTokenInstance3.address;
+
+    try {
+      await validatorInstance.checkSurvey(impl.survey, impl.questions, impl.validators, partHashes);
+      assert.fail();
+    } catch (e) {
+      assert(e.message.indexOf('SurveyValidator: invalid token symbol') != -1);
+    }
+  });
+
+  it('checkSurvey with fake token', async () => {
+    impl.survey.token = validatorInstance.address;
+
+    try {
+      await validatorInstance.checkSurvey(impl.survey, impl.questions, impl.validators, partHashes);
+      assert.fail();
+    } catch (e) {
+      assert(e.message.indexOf('SurveyValidator: no token symbol') != -1);
     }
   });
 
