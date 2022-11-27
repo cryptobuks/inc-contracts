@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../abstractions/Forwardable.sol";
 import "../libraries/TransferHelper.sol";
 import "../interfaces/IWETH.sol";
+import "./interfaces/ISurveyConfig.sol";
 import "./interfaces/ISurveyStorage.sol";
 import "./interfaces/ISurveyValidator.sol";
 import "./interfaces/ISurveyEngine.sol";
@@ -13,9 +14,9 @@ import "./interfaces/ISurveyImpl.sol";
 
 contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
 
-    IWETH public override currencyCnt;// Wrapped native currency
-    ISurveyConfig public override configCnt;
-    ISurveyStorage public override storageCnt;
+    IWETH internal currencyCnt;// Wrapped native currency
+    ISurveyConfig internal configCnt;
+    ISurveyStorage internal storageCnt;
 
     constructor(address _currency, address _config, address _storage, address forwarder) Forwardable(forwarder) {
         require(_currency != address(0), "SurveyEngine: invalid wrapped currency address");
@@ -29,6 +30,18 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
 
     receive() external payable {
         require(_msgSender() == address(currencyCnt), 'Not WETH9');
+    }
+
+    function currency() external view virtual override returns (address) {
+        return address(currencyCnt);
+    }
+
+    function surveyConfig() external view virtual override returns (address) {
+        return address(configCnt);
+    }
+
+    function surveyStorage() external view virtual override returns (address) {
+        return address(storageCnt);
     }
 
     function addSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) 

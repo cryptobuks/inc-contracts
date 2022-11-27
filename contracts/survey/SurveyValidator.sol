@@ -25,7 +25,7 @@ contract SurveyValidator is ISurveyValidator, Ownable {
     uint256 public validatorMaxPerQuestion = 10;
     uint256 public validatorValueMaxLength = 128;
     uint256 public hashMaxPerSurvey = 10000;
-    uint256 public responseMaxLength = 4096;
+    uint256 public responseMaxLength = 2048;
 
     // ### Validation functions ###
 

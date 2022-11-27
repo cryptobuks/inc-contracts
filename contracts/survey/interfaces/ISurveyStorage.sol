@@ -2,14 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "./ISurveyModel.sol";
-import "./ISurveyConfig.sol";
 
 /**
  * @dev Interface to implement the survey storage
  */
 interface ISurveyStorage is ISurveyModel {
 
-    function configCnt() external view returns (ISurveyConfig);
+    function surveyConfig() external view returns (address);
     function totalGasReserve() external view returns (uint256);
     function txGasSamples(uint256 maxLength) external view returns (uint256[] memory);
     function remainingBudgetOf(address surveyAddr) external view returns (uint256);

@@ -9,8 +9,8 @@ import "../abstractions/Manageable.sol";
 
 contract SurveyStorage is ISurveyStorage, Manageable {
 
-    ISurveyConfig public override configCnt;
     uint256 public override totalGasReserve;// total gas reserve for all surveys
+    ISurveyConfig internal configCnt;
     
     address[] internal _surveys;
     uint256[] internal _txGasSamples;// samples to calculate the average meta-transaction gas
@@ -22,6 +22,10 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     constructor(address _config) {
         require(_config != address(0), "SurveyStorage: invalid config address");
         configCnt = ISurveyConfig(_config);
+    }
+
+    function surveyConfig() external view virtual override returns (address) {
+        return address(configCnt);
     }
 
     function txGasSamples(uint256 maxLength) external view override returns (uint256[] memory) {

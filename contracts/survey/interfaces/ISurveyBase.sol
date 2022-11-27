@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import "./ISurveyModel.sol";
-import "./ISurveyConfig.sol";
 
 /**
  * @dev Interface to implement a survey contract

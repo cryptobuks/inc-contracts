@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
-import "../../interfaces/IWETH.sol";
-import "./ISurveyStorage.sol";
-import "./ISurveyConfig.sol";
 import "./ISurveyModel.sol";
 
 /**
@@ -36,9 +33,9 @@ import "./ISurveyModel.sol";
         uint256 txGas
     );
 
-    function currencyCnt() external view returns (IWETH);
-    function storageCnt() external view returns (ISurveyStorage);
-    function configCnt() external view returns (ISurveyConfig);
+    function currency() external view returns (address);
+    function surveyConfig() external view returns (address);
+    function surveyStorage() external view returns (address);
 
     function addSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external payable;
     function solveSurvey(address surveyAddr) external;
