@@ -10,26 +10,26 @@ import "./ISurveyModel.sol";
 
    event OnSurveyAdded(
         address indexed owner,
-        address surveyAddr
+        address indexed surveyAddr
     );
 
     event OnSurveySolved(
         address indexed owner,
-        address surveyAddr,
+        address indexed surveyAddr,
         uint256 budgetRefund,
         uint256 gasRefund
     );
 
     event OnGasReserveIncreased(
         address indexed owner,
-        address surveyAddr,
+        address indexed surveyAddr,
         uint256 gasAdded,
         uint256 gasReserve
     );
 
     event OnParticipationAdded(
         address indexed participant,
-        address surveyAddr,
+        address indexed surveyAddr,
         uint256 txGas
     );
 

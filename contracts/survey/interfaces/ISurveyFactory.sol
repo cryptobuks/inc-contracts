@@ -10,5 +10,5 @@ interface ISurveyFactory is ISurveyModel {
 
     // ### Manager functions `engine` ###
 
-    function createSurvey(SurveyWrapper calldata wrapper, address configAddr) external returns (address);
+    function createSurvey(SurveyWrapper calldata wrapper, address configAddr, address storageAddr) external returns (address);
 }

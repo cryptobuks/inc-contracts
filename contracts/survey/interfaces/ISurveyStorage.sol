@@ -63,7 +63,7 @@ interface ISurveyStorage is ISurveyModel {
 
     // ### Manager functions ###
 
-    function addSurvey(SurveyWrapper calldata wrapper) external returns (address);
+    function saveSurvey(address senderAddr, address surveyAddr, uint256 gasReserve) external returns (address);
     function addParticipation(Participation calldata participation, string calldata key) external;
     function solveSurvey(address surveyAddr) external;
     function increaseGasReserve(address surveyAddr, uint256 amount) external;

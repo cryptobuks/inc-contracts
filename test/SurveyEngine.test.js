@@ -9,7 +9,6 @@ const sign = require("./shared/sign");
 const { HOUR_SECONDS } = require("../constants");
 const { bufferToHex, privateToAddress, toBuffer } = require('ethereumjs-util');
 const { toChecksumAddress } = require('web3-utils');
-const SurveyImpl = artifacts.require('SurveyImpl');
 
 contract('SurveyEngine', accounts => {
 
@@ -140,9 +139,9 @@ contract('SurveyEngine', accounts => {
         const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
-        const devChainId = 1;
+        const chainId = await web3.eth.getChainId();
 
-        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
+        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, chainId);
 
         // Execute meta-transaction
         let result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
@@ -150,10 +149,10 @@ contract('SurveyEngine', accounts => {
 
         // Add participation 2. using new participant & new partKey
         const nonce2 = await impl.forwarderInstance.getNonce(impl.user2);
-        request.nonce = Number(nonce2);
+        request.nonce = nonce2.toString();
         request.from = impl.user2;
         request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, partKey2, txGas).encodeABI();
-        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
+        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, chainId);
 
         result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
         assert(result.receipt.status);
@@ -194,9 +193,9 @@ contract('SurveyEngine', accounts => {
         const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
-        const devChainId = 1;
+        const chainId = await web3.eth.getChainId();
 
-        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
+        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, chainId);
         //cmn.log('signature: ' + signature);
 
         try {
@@ -213,17 +212,17 @@ contract('SurveyEngine', accounts => {
         const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
-        const devChainId = 1;
+        const chainId = await web3.eth.getChainId();
 
         // Add participation 1
-        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
+        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, chainId);
         let result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
         assert(result.receipt.status);
 
         // Try add participation 2, using same participant
         const nonce2 = await impl.forwarderInstance.getNonce(impl.user1);
-        request.nonce = Number(nonce2);
-        signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
+        request.nonce = nonce2.toString();
+        signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, chainId);
 
         try {
             await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
@@ -239,19 +238,19 @@ contract('SurveyEngine', accounts => {
         const data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part1.responses, partKey1, txGas).encodeABI();
         const nonce = await impl.forwarderInstance.getNonce(impl.user1);
         const request = await sign.buildRequest(impl.user1, impl.engineInstance.address, data, txGas, nonce);
-        const devChainId = 1;
+        const chainId = await web3.eth.getChainId();
 
         // Add participation 1
-        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, devChainId);
+        let signature = sign.signWithPk(signer1, impl.forwarderInstance.address, request, chainId);
         let result = await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
         assert(result.receipt.status);
 
         // Try add participation 2, using new participant & same partKey
         const nonce2 = await impl.forwarderInstance.getNonce(impl.user2);
-        request.nonce = Number(nonce2);
+        request.nonce = nonce2.toString();
         request.from = impl.user2;
         request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, partKey1, txGas).encodeABI();
-        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
+        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, chainId);
 
         try {
             await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
@@ -262,7 +261,7 @@ contract('SurveyEngine', accounts => {
 
         // Try add participation 2, without partKey
         request.data = impl.engineInstance.contract.methods.addParticipationFromForwarder(surveyAddr, impl.part2.responses, '', txGas).encodeABI();
-        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, devChainId);
+        signature = sign.signWithPk(signer2, impl.forwarderInstance.address, request, chainId);
 
         try {
             await impl.forwarderInstance.execute(request, signature, { from: impl.relayer });
@@ -308,7 +307,7 @@ contract('SurveyEngine', accounts => {
         const engineINCBalanceAfter = await impl.tokenInstance.balanceOf(impl.engineInstance.address);
 
         // Check the ETH and INC balance of the creator after solving the survey
-        const gasUsed = cmn.toBN(result.receipt.gasUsed).mul(impl.gasPrice);
+        const gasUsed = cmn.toBN(result.receipt.gasUsed).mul(cmn.toBN(result.receipt.effectiveGasPrice));
         const ethDiff = cmn.toBN(creatorETHBalanceAfter).sub(cmn.toBN(creatorETHBalanceBefore)).add(gasUsed);
         assert(ethDiff.eq(cmn.toBN(gasReserve)));
 

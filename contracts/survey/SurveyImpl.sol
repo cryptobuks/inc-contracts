@@ -86,10 +86,10 @@ contract SurveyImpl is ISurveyImpl, SurveyBase, Manageable {
     }
 
     function solveSurvey() external override onlyManager returns (uint256) {
-        uint256 gasReserve = remainingGasReserve;
+        uint256 withdrawnGasReserve = remainingGasReserve;
         remainingBudget = 0;
         remainingGasReserve = 0;
-        return gasReserve;
+        return withdrawnGasReserve;
     }
 
     function increaseGasReserve(uint256 amount) external override onlyManager {

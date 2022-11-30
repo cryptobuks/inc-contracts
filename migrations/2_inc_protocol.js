@@ -55,7 +55,7 @@ module.exports = async function (deployer, network, accounts) {
 
   // set managers
   await surveyStorage.setManager(surveyEngine.address);
-  await surveyFactory.setManager(surveyStorage.address);
+  await surveyFactory.setManager(surveyEngine.address);
   await forwarder.setManager(custody);// set custody address for the gas reserve
 
   for (let relayer of relayers) {

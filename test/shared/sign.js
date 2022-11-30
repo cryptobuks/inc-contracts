@@ -46,7 +46,7 @@ async function buildRequest(from, to, data, gas, nonce = 0) {
     to,
     value: "0",
     gas: gas.toString(),
-    nonce: nonce,
+    nonce: nonce.toString(),
     data: data
   };
 }

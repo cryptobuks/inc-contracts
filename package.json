@@ -6,7 +6,7 @@
   "author": "Incentive Token LLC",
   "license": "BUSL-1.1",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.7.3",
+    "@openzeppelin/contracts": "4.7.3",
     "@truffle/contract": "^4.3.38",
     "@truffle/hdwallet-provider": "^1.5.0",
     "dotenv": "^10.0.0",

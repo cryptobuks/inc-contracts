@@ -8,6 +8,7 @@ import "../libraries/TransferHelper.sol";
 import "../interfaces/IWETH.sol";
 import "./interfaces/ISurveyConfig.sol";
 import "./interfaces/ISurveyStorage.sol";
+import "./interfaces/ISurveyFactory.sol";
 import "./interfaces/ISurveyValidator.sol";
 import "./interfaces/ISurveyEngine.sol";
 import "./interfaces/ISurveyImpl.sol";
@@ -69,7 +70,8 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
         wrapper.hashes = hashes;
         wrapper.gasReserve = gasReserve;
         
-        address surveyAddr = storageCnt.addSurvey(wrapper);
+        address surveyAddr = ISurveyFactory(configCnt.surveyFactory()).createSurvey(wrapper, address(configCnt), address(storageCnt));
+        storageCnt.saveSurvey(_msgSender(), surveyAddr, gasReserve);
 
         // Transfer tokens to this contract
         TransferHelper.safeTransferFrom(survey.token, _msgSender(), address(this), survey.budget);

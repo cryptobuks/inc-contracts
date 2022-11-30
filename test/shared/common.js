@@ -41,6 +41,11 @@ class Common {
     return web3.utils.fromWei(value);
   };
 
+  calcGasMargin = (value, percent = 20) => {
+    let bn = web3.utils.isBN(value) ? value : this.toBN(value);
+    return bn.muln(100 + percent).divn(100);
+  };
+
   calcTokenRateByTime = (timestamp) => {
     let elapsedTime = timestamp - this.openingTime;
     let timeRange = this.closingTime - this.openingTime;

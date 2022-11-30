@@ -9,7 +9,7 @@ contract SurveyFactory is ISurveyFactory, Manageable {
 
     // ### Manager functions `engine` ###
 
-    function createSurvey(SurveyWrapper calldata wrapper, address configAddr) external override onlyManager returns (address) {
+    function createSurvey(SurveyWrapper calldata wrapper, address configAddr, address storageAddr) external override onlyManager returns (address) {
         Survey memory data;
         data.title = wrapper.survey.title;
         data.description = wrapper.survey.description;
@@ -27,7 +27,7 @@ contract SurveyFactory is ISurveyFactory, Manageable {
         data.addr = address(impl);
 
         impl.initialize(data, wrapper.questions, wrapper.validators, wrapper.hashes, wrapper.gasReserve);
-        impl.setManager(manager());
+        impl.setManager(storageAddr);
 
         return data.addr;
     }

@@ -57,15 +57,15 @@ it('Check forwarder domain separator', async () => {
     const typeHash = web3.utils.keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
     const nameHash = web3.utils.keccak256("INCForwarder");
     const versionHash = web3.utils.keccak256("0.0.1");
-    const devChainId = 1;// On development network you should use 1
+    const chainId = await web3.eth.getChainId();
 
     const dm = await forwarderInstance.DOMAIN_SEPARATOR();
 
     // EIP712._buildDomainSeparator() return keccak256(abi.encode(typeHash, nameHash, versionHash, block.chainid, address(this)));
-    const dmCheck1 = web3.utils.keccak256(web3.eth.abi.encodeParameters(['bytes32', 'bytes32', 'bytes32', 'uint256', 'address'], [typeHash, nameHash, versionHash, devChainId, forwarderInstance.address]));
+    const dmCheck1 = web3.utils.keccak256(web3.eth.abi.encodeParameters(['bytes32', 'bytes32', 'bytes32', 'uint256', 'address'], [typeHash, nameHash, versionHash, chainId, forwarderInstance.address]));
     assert(dm == dmCheck1);
 
-    const dmCheck2 = sign.domainSeparator('INCForwarder', '0.0.1', devChainId, forwarderInstance.address);
+    const dmCheck2 = sign.domainSeparator('INCForwarder', '0.0.1', chainId, forwarderInstance.address);
     assert(dm == dmCheck2);
 });
 
@@ -75,9 +75,9 @@ it('Check forwarder domain separator', async () => {
     const data = tokenInstance.contract.methods.approve(user2, MAX_UINT256).encodeABI();
     const nonce = await forwarderInstance.getNonce(user1);
     const request = await sign.buildRequest(user1, tokenInstance.address, data, txGas, nonce);
-    const devChainId = 1;
+    const chainId = await web3.eth.getChainId();
 
-    const signature = sign.signWithPk(signer1, forwarderInstance.address, request, devChainId);
+    const signature = sign.signWithPk(signer1, forwarderInstance.address, request, chainId);
 
     // Execute meta-transaction
     const result = await forwarderInstance.execute(request, signature, { from: relayer });

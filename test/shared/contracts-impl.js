@@ -145,7 +145,7 @@ class ContractsImpl {
 
         // assign manager for contracts
         await this.storageInstance.setManager(this.engineInstance.address);
-        await this.factoryInstance.setManager(this.storageInstance.address);
+        await this.factoryInstance.setManager(this.engineInstance.address);
         await this.forwarderInstance.setManager(this.relayer);
 
         // set token to survey
@@ -175,7 +175,10 @@ class ContractsImpl {
         await this.currencyInstance.deposit({ from: this.relayer, value: weiAmount });
 
         // set parameters to calculate survey wei
-        this.gasPrice = cmn.toBN(await web3.eth.getGasPrice());
+        // Here the gas is always 2000000000, while in the contracts the gas changes (2500051036, 2500000702, ..)
+        // That is why we are going to assign the gas manually.
+        //this.gasPrice = cmn.toBN(await web3.eth.getGasPrice());
+        this.gasPrice = cmn.toBN('3000000000');
         this.maxParts = cmn.toBN(this.survey.budget).div(cmn.toBN(this.survey.reward)).toNumber();
         this.fee = cmn.toBN(await this.configInstance.fee()).muln(this.maxParts);
     };

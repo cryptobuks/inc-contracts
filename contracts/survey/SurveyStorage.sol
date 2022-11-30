@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import "./interfaces/ISurveyStorage.sol";
 import "./interfaces/ISurveyImpl.sol";
 import "./interfaces/ISurveyConfig.sol";
-import "./interfaces/ISurveyFactory.sol";
 import "../abstractions/Manageable.sol";
 
 contract SurveyStorage is ISurveyStorage, Manageable {
@@ -215,12 +214,11 @@ contract SurveyStorage is ISurveyStorage, Manageable {
 
     // ### Manager functions ###
 
-    function addSurvey(SurveyWrapper calldata wrapper) external override onlyManager returns (address) {
-        address surveyAddr = ISurveyFactory(configCnt.surveyFactory()).createSurvey(wrapper, address(configCnt));
+    function saveSurvey(address senderAddr, address surveyAddr, uint256 gasReserve) external override onlyManager returns (address) {
         _surveys.push(surveyAddr);
         _surveyFlags[surveyAddr] = true;
-        _ownSurveys[wrapper.account].push(surveyAddr);
-        totalGasReserve += wrapper.gasReserve;
+        _ownSurveys[senderAddr].push(surveyAddr);
+        totalGasReserve += gasReserve;
         return surveyAddr;
     }
 
@@ -237,8 +235,8 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     }
 
     function solveSurvey(address surveyAddr) external override onlyManager {
-        uint256 gasReserve = ISurveyImpl(surveyAddr).solveSurvey();
-        totalGasReserve -= gasReserve;
+        uint256 withdrawnGasReserve = ISurveyImpl(surveyAddr).solveSurvey();
+        totalGasReserve -= withdrawnGasReserve;
     }
 
     function increaseGasReserve(address surveyAddr, uint256 amount) external override onlyManager {
