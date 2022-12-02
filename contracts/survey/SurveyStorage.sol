@@ -14,9 +14,13 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     address[] internal _surveys;
     uint256[] internal _txGasSamples;// samples to calculate the average meta-transaction gas
 
-    mapping(address => bool) internal _surveyFlags;// survey address => flag
+    mapping(address => bool) internal _surveyFlags;// surveyAddr => flag
     mapping(address => address[]) internal _ownSurveys;// account => survey addresses
+
+    mapping(uint256 => PartID) internal _participations;// index => surveyAddr & account
     mapping(address => address[]) internal _ownParticipations;// account => survey addresses
+
+    uint256 internal _partIndex;
 
     constructor(address _config) {
         require(_config != address(0), "SurveyStorage: invalid config address");
@@ -166,6 +170,26 @@ contract SurveyStorage is ISurveyStorage, Manageable {
 
     // ### Participations ###
 
+    function getParticipationsTotal() external view override returns (uint256) {
+        return _partIndex;
+    }
+
+    function getGlobalParticipations(uint256 cursor, uint256 length) external view override returns (Participation[] memory) {
+        require(cursor < _partIndex, "SurveyStorage: cursor out of range");
+        require(length > 0 && cursor+length <= _partIndex, "SurveyStorage: invalid length from current position");
+        require(length <= configCnt.participationMaxPerRequest(), "SurveyStorage: oversized length of participations");
+
+        Participation[] memory array = new Participation[](length);
+        PartID memory partID;
+
+        for (uint i = cursor; i < cursor+length; i++) {
+            partID = _participations[i];
+            array[i-cursor] = ISurveyImpl(partID.surveyAddr).findParticipation(partID.account);
+        }
+
+        return array;
+    }
+
     function getParticipations(address surveyAddr, uint256 cursor, uint256 length) external view override returns (Participation[] memory) {
         verify(surveyAddr);
         return ISurveyImpl(surveyAddr).getParticipations(cursor, length);
@@ -224,6 +248,12 @@ contract SurveyStorage is ISurveyStorage, Manageable {
 
     function addParticipation(Participation calldata participation, string calldata key) external override onlyManager {
         ISurveyImpl(participation.surveyAddr).addParticipation(participation, key);
+
+        PartID memory partID;
+        partID.surveyAddr = participation.surveyAddr;
+        partID.account = participation.account;
+
+        _participations[_partIndex++] = partID;
         _ownParticipations[participation.account].push(participation.surveyAddr);
 
         if(participation.txGas > 0) {

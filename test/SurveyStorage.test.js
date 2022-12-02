@@ -196,18 +196,28 @@ contract('SurveyStorage', (accounts) => {
     assert(isParticipant);
   });
 
-  it('getParticipations', async () => {
-    let participation = (await impl.storageInstance.getParticipations(addrs[0], 0, 1))[0];
+  it('getParticipationsTotal', async () => {
+    const participantsTotal = await impl.storageInstance.getParticipationsTotal();
+    assert(participantsTotal == numParts * 5);
+  });
+
+  it('getGlobalParticipations', async () => {
+    let participation = (await impl.storageInstance.getGlobalParticipations(0, 1))[0];
     assert(participation.surveyAddr == addrs[0]);
     assert(participation.responses.length == impl.questions.length);
 
-    participation = (await impl.storageInstance.getParticipations(addrs[0], 1, 1))[0];
-    assert(participation.surveyAddr == addrs[0]);
+    participation = (await impl.storageInstance.getGlobalParticipations(numParts, 1))[0];
+    assert(participation.surveyAddr == addrs[1]);
     assert(participation.responses.length == impl.questions.length);
-    
+
     let cursor = 0;
-    let length = 4;
-    let participations = await impl.storageInstance.getParticipations(addrs[0], cursor, length);
+    let length = numParts * 5;
+    let participations = await impl.storageInstance.getGlobalParticipations(0, length);
+    assert(participations.length == length);
+    
+    cursor = 0;
+    length = 4;
+    participations = await impl.storageInstance.getGlobalParticipations(cursor, length);
 
     assert(participations.length == length);
     for (let i = 0; i < participations.length; i++) {
@@ -217,11 +227,46 @@ contract('SurveyStorage', (accounts) => {
 
     cursor = 3;
     length = 3;
+    participations = await impl.storageInstance.getGlobalParticipations(cursor, length);
+
+    assert(participations.length == length);
+    for (let i = 0; i < participations.length; i++) {
+      assert(participations[i].surveyAddr == addrs[0]);
+      assert(participations[i].responses.length == impl.questions.length);
+    }
+  });
+
+  it('getParticipations', async () => {
+    let participation = (await impl.storageInstance.getParticipations(addrs[0], 0, 1))[0];
+    assert(participation.surveyAddr == addrs[0]);
+    assert(participation.responses.length == impl.questions.length);
+
+    participation = (await impl.storageInstance.getParticipations(addrs[1], 1, 1))[0];
+    assert(participation.surveyAddr == addrs[1]);
+    assert(participation.responses.length == impl.questions.length);
+    
+    let cursor = 0;
+    let length = numParts;
+    let participations = await impl.storageInstance.getParticipations(addrs[0], cursor, length);
+    assert(participations.length == length);
+
+    cursor = 0;
+    length = 4;
     participations = await impl.storageInstance.getParticipations(addrs[0], cursor, length);
 
     assert(participations.length == length);
     for (let i = 0; i < participations.length; i++) {
       assert(participations[i].surveyAddr == addrs[0]);
+      assert(participations[i].responses.length == impl.questions.length);
+    }
+
+    cursor = 3;
+    length = 3;
+    participations = await impl.storageInstance.getParticipations(addrs[2], cursor, length);
+
+    assert(participations.length == length);
+    for (let i = 0; i < participations.length; i++) {
+      assert(participations[i].surveyAddr == addrs[2]);
       assert(participations[i].responses.length == impl.questions.length);
     }
   });

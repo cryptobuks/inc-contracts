@@ -8,6 +8,11 @@ import "./ISurveyModel.sol";
  */
 interface ISurveyStorage is ISurveyModel {
 
+    struct PartID {
+        address surveyAddr;
+        address account;
+    }
+
     function surveyConfig() external view returns (address);
     function totalGasReserve() external view returns (uint256);
     function txGasSamples(uint256 maxLength) external view returns (uint256[] memory);
@@ -47,6 +52,8 @@ interface ISurveyStorage is ISurveyModel {
 
     // ### Participations ###
 
+    function getParticipationsTotal() external view returns (uint256);
+    function getGlobalParticipations(uint256 cursor, uint256 length) external view returns (Participation[] memory);
     function getParticipations(address surveyAddr, uint256 cursor, uint256 length) external view returns (Participation[] memory);
     function findParticipation(address surveyAddr, address account) external view returns (Participation memory);
 
