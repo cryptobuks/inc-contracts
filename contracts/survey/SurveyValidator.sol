@@ -32,7 +32,8 @@ contract SurveyValidator is ISurveyValidator, Ownable {
     function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view override {
         // Validate token metadata
         try IERC20Metadata(survey.token).symbol() returns (string memory symbol) {
-            uint256 symbolLength = symbol.trim().toSlice().len();
+            uint256 symbolLength = symbol.toSlice().len();
+            require(symbolLength == symbol.trim().toSlice().len(), "SurveyValidator: token symbol with leading or trailing spaces");
             require(symbolLength > 0, "SurveyValidator: empty token symbol");
             require(symbolLength <= tknSymbolMaxLength, "SurveyValidator: invalid token symbol");
         } catch {
@@ -40,7 +41,8 @@ contract SurveyValidator is ISurveyValidator, Ownable {
         }
 
         try IERC20Metadata(survey.token).name() returns (string memory name) {
-            uint256 nameLength = name.trim().toSlice().len();
+            uint256 nameLength = name.toSlice().len();
+            require(nameLength == name.trim().toSlice().len(), "SurveyValidator: token name with leading or trailing spaces");
             require(nameLength > 0, "SurveyValidator: empty token name");
             require(nameLength <= tknNameMaxLength, "SurveyValidator: invalid token name");
         } catch {
@@ -59,7 +61,14 @@ contract SurveyValidator is ISurveyValidator, Ownable {
         require(descLength <= descriptionMaxLength, "SurveyValidator: very long survey description");
 
         // Validate logo URL
-        require(bytes(survey.logoUrl).length <= urlMaxLength, "SurveyValidator: very long survey logo URL");
+        StringUtils.slice memory logoUrlSlice = survey.logoUrl.toSlice();
+        uint256 logoUrlLength = logoUrlSlice.len();
+        require(logoUrlLength == survey.logoUrl.trim().toSlice().len(), "SurveyValidator: logo URL with leading or trailing spaces");
+        require(logoUrlLength <= urlMaxLength, "SurveyValidator: very long survey logo URL");
+        if(logoUrlLength > 0) {
+            require(logoUrlSlice.startsWith("http://".toSlice()) || logoUrlSlice.startsWith("https://".toSlice()) || logoUrlSlice.startsWith("ipfs://".toSlice()), 
+            "SurveyValidator: invalid logo URL");
+        }
 
         // Validate date range
         require(survey.startTime >= block.timestamp && survey.startTime < survey.endTime, "SurveyValidator: invalid date range");
@@ -241,6 +250,11 @@ contract SurveyValidator is ISurveyValidator, Ownable {
                    question.responseType == ResponseType.Date || question.responseType == ResponseType.DateRange || 
                    question.responseType == ResponseType.ArrayDate) {
                       require(validator.value.isUDigit(), "SurveyValidator: validator value must be a positive integer");
+                }
+                
+                if(question.responseType == ResponseType.Bool || question.responseType == ResponseType.ArrayBool) {
+                    require(validator.value.toSlice().equals("true".toSlice()) || validator.value.toSlice().equals("false".toSlice()), 
+                    "SurveyValidator: validator value must be a boolean");
                 }
         } else {
             require(validatorValueLength == 0, "SurveyValidator: the validator does not require any value");

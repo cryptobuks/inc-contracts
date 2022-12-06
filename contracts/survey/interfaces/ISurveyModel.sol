@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
  */
 interface ISurveyModel {
 
+    // ArrayText elements should not contain the separator (;)
     enum ResponseType {
         Bool, Text, Number, Percent, Date, Rating, OneOption, 
         ManyOptions, Range, DateRange,
