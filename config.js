@@ -8,7 +8,7 @@ module.exports = {
     UNLOCK_CLIFF: "2024-01-01",
     UNLOCK_END: "2026-06-01",
     OFFER_START_DATE: "2023-01-01",
-    OFFER_END_DATE: "2023-03-31",
+    OFFER_END_DATE: "2023-06-30",
     OFFER_START_RATE: 500,// Token units/TKNbits per 1 wei
     OFFER_END_RATE: 50
 };

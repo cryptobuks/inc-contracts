@@ -251,6 +251,10 @@ contract SurveyValidator is ISurveyValidator, Ownable {
                    question.responseType == ResponseType.ArrayDate) {
                       require(validator.value.isUDigit(), "SurveyValidator: validator value must be a positive integer");
                 }
+
+                if(validator.expression == Expression.MinLength || validator.expression == Expression.MaxLength) {
+                    require(validator.value.parseUInt() <= responseMaxLength, "SurveyValidator: validator value exceeds response limit");
+                }
                 
                 if(question.responseType == ResponseType.Bool || question.responseType == ResponseType.ArrayBool) {
                     require(validator.value.toSlice().equals("true".toSlice()) || validator.value.toSlice().equals("false".toSlice()), 
