@@ -19,16 +19,16 @@ contract SurveyFactory is ISurveyFactory, Manageable {
         data.budget = wrapper.survey.budget;
         data.reward = wrapper.survey.reward;
         data.token = wrapper.survey.token;
-        data.entryTime = block.timestamp;
-        data.account = wrapper.account;
+        data.surveyTime = block.timestamp;
+        data.surveyOwner = wrapper.account;
         data.keyRequired = wrapper.hashes.length > 0;
         
         SurveyImpl impl = new SurveyImpl(configAddr);
-        data.addr = address(impl);
+        data.surveyAddr = address(impl);
 
         impl.initialize(data, wrapper.questions, wrapper.validators, wrapper.hashes, wrapper.gasReserve);
         impl.setManager(storageAddr);
 
-        return data.addr;
+        return data.surveyAddr;
     }
 }

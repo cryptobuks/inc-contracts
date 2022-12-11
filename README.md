@@ -1,5 +1,5 @@
 > **Note**
-> ## [The Initial offer of the INC Token](https://survey.inctoken.org/token-sale) begins January 1, 2023 and ends June 30, 2023.
+> ## [The Initial offer of the INC Token](https://survey.inctoken.org/token-sale) begins January 1, 2023 and ends March 31, 2023.
 
 # INC Contracts
 

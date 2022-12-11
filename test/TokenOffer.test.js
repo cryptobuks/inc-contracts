@@ -1,6 +1,8 @@
 const cmn = require("./shared/common");
 const time = require('./shared/time');
 const { ZERO_ADDRESS } = require("../constants");
+const config = require('../config');
+const offerPhase = parseInt(config.OFFER_PHASE);
 
 contract('TokenOffer', accounts => {
 
@@ -43,6 +45,11 @@ contract('TokenOffer', accounts => {
         let futureRate = cmn.calcTokenRateByTime(deadline);
         return cmn.toBN(weiAmount).mul(cmn.toBN(futureRate));
     }
+
+    it('check phase', async () => {
+        let phase = await offerInstance.phase();
+        assert(parseInt(phase) == offerPhase);
+    });
 
     it('should have crowdsale opening time', async () => {
         let openingTime = await offerInstance.openingTime();

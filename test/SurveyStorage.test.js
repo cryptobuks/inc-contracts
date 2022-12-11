@@ -87,7 +87,7 @@ contract('SurveyStorage', (accounts) => {
 
   it('findSurvey', async () => {
     const survey = await impl.storageInstance.findSurvey(addrs[0]);
-    assert(survey.account == impl.creator);
+    assert(survey.surveyOwner == impl.creator);
     assert(!survey.keyRequired);
     impl.checkSurvey(survey, addrs[0]);
   });

@@ -14,11 +14,11 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     address[] internal _surveys;
     uint256[] internal _txGasSamples;// samples to calculate the average meta-transaction gas
 
-    mapping(address => bool) internal _surveyFlags;// surveyAddr => flag
-    mapping(address => address[]) internal _ownSurveys;// account => survey addresses
+    mapping(address => bool) internal _surveyFlags;// survey address => flag
+    mapping(address => address[]) internal _ownSurveys;// survey owner => survey addresses
 
-    mapping(uint256 => PartID) internal _participations;// index => surveyAddr & account
-    mapping(address => address[]) internal _ownParticipations;// account => survey addresses
+    mapping(uint256 => PartID) internal _participations;// index => (survey address, part owner)
+    mapping(address => address[]) internal _ownParticipations;// part owner => survey addresses
 
     uint256 internal _partIndex;
 
@@ -184,7 +184,7 @@ contract SurveyStorage is ISurveyStorage, Manageable {
 
         for (uint i = cursor; i < cursor+length; i++) {
             partID = _participations[i];
-            array[i-cursor] = ISurveyImpl(partID.surveyAddr).findParticipation(partID.account);
+            array[i-cursor] = ISurveyImpl(partID.surveyAddr).findParticipation(partID.partOwner);
         }
 
         return array;
@@ -251,10 +251,10 @@ contract SurveyStorage is ISurveyStorage, Manageable {
 
         PartID memory partID;
         partID.surveyAddr = participation.surveyAddr;
-        partID.account = participation.account;
+        partID.partOwner = participation.partOwner;
 
         _participations[_partIndex++] = partID;
-        _ownParticipations[participation.account].push(participation.surveyAddr);
+        _ownParticipations[participation.partOwner].push(participation.surveyAddr);
 
         if(participation.txGas > 0) {
             uint256 txPrice = tx.gasprice * participation.txGas;

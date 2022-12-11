@@ -92,7 +92,7 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
 
         ISurveyImpl surveyImpl = ISurveyImpl(surveyAddr);
         Survey memory survey = surveyImpl.data();
-        require(_msgSender() == survey.account, "SurveyEngine: you are not the survey owner");
+        require(_msgSender() == survey.surveyOwner, "SurveyEngine: you are not the survey owner");
 
         uint256 remainingBudget = surveyImpl.remainingBudget();
         uint256 remainingGasReserve = surveyImpl.remainingGasReserve();
@@ -121,7 +121,7 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
 
         ISurveyImpl surveyImpl = ISurveyImpl(surveyAddr);
         Survey memory survey = surveyImpl.data();
-        require(_msgSender() == survey.account, "SurveyEngine: you are not the survey owner");
+        require(_msgSender() == survey.surveyOwner, "SurveyEngine: you are not the survey owner");
 
         uint256 remainingBudget = surveyImpl.remainingBudget();
         uint256 remainingGasReserve = surveyImpl.remainingGasReserve();
@@ -171,9 +171,9 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
         participation.surveyAddr = surveyAddr;
         participation.responses = responses;
         participation.txGas = txGas;
-        participation.entryTime = block.timestamp;
         participation.gasPrice = tx.gasprice;
-        participation.account = account;
+        participation.partTime = block.timestamp;
+        participation.partOwner = account;
 
         storageCnt.addParticipation(participation, key);
 

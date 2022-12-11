@@ -20,6 +20,7 @@ class Common {
 
   tokenTotal = new BN(config.TOTAL_SUPPLY).mul(ONE_TOKEN);
   initialOffer = new BN(config.INITIAL_OFFER_TOKENS).mul(ONE_TOKEN);
+  offerPhase = parseInt(config.OFFER_PHASE);
   openingTime = Math.round(new Date().getTime() / 1000) + HOUR_SECONDS;
   closingTime = this.openingTime + MONTH_SECONDS;
   initialRate = parseInt(config.OFFER_START_RATE);
@@ -98,7 +99,7 @@ class Common {
   };
 
   newTokenOffer = (tokenAddr) => {
-    return TokenOffer.new(tokenAddr, this.openingTime, this.closingTime, this.initialRate, this.finalRate);
+    return TokenOffer.new(tokenAddr, this.offerPhase, this.openingTime, this.closingTime, this.initialRate, this.finalRate);
   };
 
   newTimelockController = () => {

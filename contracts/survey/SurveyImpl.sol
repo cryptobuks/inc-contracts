@@ -70,8 +70,8 @@ contract SurveyImpl is ISurveyImpl, SurveyBase, Manageable {
             }
         }
 
-        _participations[participation.account] = participation;
-        _participants.push(participation.account);
+        _participations[participation.partOwner] = participation;
+        _participants.push(participation.partOwner);
 
         remainingBudget -= _data.reward;
 

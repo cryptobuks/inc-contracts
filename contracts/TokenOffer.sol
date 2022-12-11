@@ -19,6 +19,8 @@ contract TokenOffer is Ownable, ReentrancyGuard {
 
     // Token to offer
     IERC20 public tokenCnt;
+    // Offer phase
+    uint256 public phase;
     // Offer opening time
     uint256 public openingTime;
     // Offer closing time
@@ -32,7 +34,7 @@ contract TokenOffer is Ownable, ReentrancyGuard {
     // Amount native wei raised
     uint256 public totalRaised;
 
-    constructor(address _token, uint256 _openingTime, uint256 _closingTime,
+    constructor(address _token, uint256 _phase, uint256 _openingTime, uint256 _closingTime,
         uint256 _initialRate, uint256 _finalRate) {
         require(_token != address(0), "TokenOffer: invalid token address");
 
@@ -43,6 +45,7 @@ contract TokenOffer is Ownable, ReentrancyGuard {
         require(_initialRate > _finalRate, "TokenOffer: initial rate is not greater than final rate");
 
         tokenCnt = IERC20(_token);
+        phase = _phase;
         openingTime = _openingTime;
         closingTime = _closingTime;
         initialRate = _initialRate;

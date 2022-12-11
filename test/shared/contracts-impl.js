@@ -230,7 +230,7 @@ class ContractsImpl {
     };
 
     checkSurvey = (survey, surveyAddr) => {
-        assert(survey.addr == surveyAddr);
+        assert(survey.surveyAddr == surveyAddr);
         assert(survey.title == this.survey.title);
         assert(survey.description == this.survey.description);
         assert(survey.startTime == this.survey.startTime);

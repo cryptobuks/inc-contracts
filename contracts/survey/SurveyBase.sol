@@ -92,7 +92,7 @@ abstract contract SurveyBase is Context, ISurveyBase {
 
     function isParticipant(address account) external view virtual override returns (bool) {
         require(account != address(0), "SurveyBase: invalid participant address");
-        return _participations[account].entryTime != 0;
+        return _participations[account].partTime != 0;
     }
 
     // ### Participations ###

@@ -10,7 +10,7 @@ interface ISurveyStorage is ISurveyModel {
 
     struct PartID {
         address surveyAddr;
-        address account;
+        address partOwner;
     }
 
     function surveyConfig() external view returns (address);

@@ -49,19 +49,19 @@ interface ISurveyModel {
         uint256 budget;
         uint256 reward;
         address token;
-        uint256 entryTime;
-        address account;
         bool keyRequired;
-        address addr;
+        uint256 surveyTime;
+        address surveyOwner;
+        address surveyAddr;
     }
 
     struct Participation {
         address surveyAddr;
         string[] responses;
         uint256 txGas;
-        uint256 entryTime;
         uint256 gasPrice;
-        address account;
+        uint256 partTime;
+        address partOwner;
     }
 
     enum Operator {
