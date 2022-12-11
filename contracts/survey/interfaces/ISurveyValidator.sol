@@ -11,8 +11,8 @@ interface ISurveyValidator is ISurveyModel {
 
     // ### Validation functions ###
 
-    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view;
-    function checkResponse(Question memory question, Validator[] memory validators, string memory response) external view;
+    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external;
+    function checkResponse(Question memory question, Validator[] memory validators, string memory response) external;
     function isLimited(ResponseType responseType) external returns (bool);
     function isArray(ResponseType responseType) external returns (bool);
 

@@ -8,11 +8,10 @@ import "../abstractions/Manageable.sol";
 
 contract SurveyStorage is ISurveyStorage, Manageable {
 
-    uint256 public override totalGasReserve;// total gas reserve for all surveys
     ISurveyConfig internal configCnt;
     
     address[] internal _surveys;
-    uint256[] internal _txGasSamples;// samples to calculate the average meta-transaction gas
+    uint256[10000] internal _txGasSamples;// samples to calculate the average meta-transaction gas
 
     mapping(address => bool) internal _surveyFlags;// survey address => flag
     mapping(address => address[]) internal _ownSurveys;// survey owner => survey addresses
@@ -20,7 +19,10 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     mapping(uint256 => PartID) internal _participations;// index => (survey address, part owner)
     mapping(address => address[]) internal _ownParticipations;// part owner => survey addresses
 
+    uint256 public override totalGasReserve;// total gas reserve for all surveys
     uint256 internal _partIndex;
+    uint256 internal _txSampleIndex;
+    uint256 internal _txSampleLength;
 
     constructor(address _config) {
         require(_config != address(0), "SurveyStorage: invalid config address");
@@ -32,13 +34,24 @@ contract SurveyStorage is ISurveyStorage, Manageable {
     }
 
     function txGasSamples(uint256 maxLength) external view override returns (uint256[] memory) {
-        require(maxLength <= configCnt.txGasMaxPerRequest(), "SurveyStorage: oversized length of tx gas samples");
-        uint256 length = (maxLength <= _txGasSamples.length)? maxLength: _txGasSamples.length;
+        require(maxLength > 0 && maxLength <= configCnt.txGasMaxPerRequest(), "SurveyStorage: oversized length of tx gas samples");
+        uint256 length = (maxLength <= _txSampleLength)? maxLength: _txSampleLength;
         uint256[] memory array = new uint256[](length);
-        uint256 cursor = _txGasSamples.length - length;
+        uint256 cursor;
+        uint256 count;
 
-        for(uint i = cursor; i < _txGasSamples.length; i++) {
-            array[i-cursor] = _txGasSamples[i];
+        if(length > _txSampleIndex) {
+            cursor = _txSampleLength - (length - _txSampleIndex);
+
+            for(uint i = cursor; i < _txSampleLength; i++) {
+                array[count++] = _txGasSamples[i];
+            }
+        }
+
+        cursor = (length < _txSampleIndex)? _txSampleIndex - length: 0;
+
+        for(uint i = cursor; i < _txSampleIndex; i++) {
+            array[count++] = _txGasSamples[i];
         }
 
         return array;
@@ -260,7 +273,15 @@ contract SurveyStorage is ISurveyStorage, Manageable {
             uint256 txPrice = tx.gasprice * participation.txGas;
             totalGasReserve -= txPrice;
             // Save sample to calculate the following costs
-            _txGasSamples.push(participation.txGas);
+            _txGasSamples[_txSampleIndex++] = participation.txGas;
+
+            if(_txSampleIndex == _txGasSamples.length) {
+                _txSampleIndex = 0;
+            }
+
+            if(_txSampleLength < _txGasSamples.length) {
+                _txSampleLength++;
+            }
         }
     }
 

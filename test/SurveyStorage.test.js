@@ -30,6 +30,11 @@ contract('SurveyStorage', (accounts) => {
     await impl.revert();
   });
 
+  it('exists', async () => {
+    const exists = await impl.storageInstance.exists(addrs[0]);
+    assert(exists === true);
+  });
+
   it('txGasSamples', async () => {
     const samples = await impl.storageInstance.txGasSamples(100);
     assert(samples.length == 0);

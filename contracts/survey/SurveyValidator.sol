@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts//security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/ISurveyValidator.sol";
 import {StringUtils} from "../libraries/StringUtils.sol";
 import {IntUtils} from "../libraries/IntUtils.sol";
 
-contract SurveyValidator is ISurveyValidator, Ownable {
+contract SurveyValidator is ISurveyValidator, Ownable, ReentrancyGuard {
 
     using StringUtils for *;
     using IntUtils for *;
@@ -29,7 +30,8 @@ contract SurveyValidator is ISurveyValidator, Ownable {
 
     // ### Validation functions ###
 
-    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) external view override {
+    function checkSurvey(SurveyRequest memory survey, Question[] memory questions, Validator[] memory validators, string[] memory hashes) 
+    external override nonReentrant {
         // Validate token metadata
         try IERC20Metadata(survey.token).symbol() returns (string memory symbol) {
             uint256 symbolLength = symbol.toSlice().len();

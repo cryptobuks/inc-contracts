@@ -57,7 +57,10 @@ interface ISurveyModel {
 
     struct Participation {
         address surveyAddr;
+        address surveyOwner;
+        address token;
         string[] responses;
+        uint256 reward;
         uint256 txGas;
         uint256 gasPrice;
         uint256 partTime;

@@ -15,7 +15,7 @@ contract SurveyConfig is ISurveyConfig, Ownable {
     uint256 public override responseMaxPerRequest = 100;
     uint256 public override participantMaxPerRequest = 100;
     uint256 public override participationMaxPerRequest = 100;
-    uint256 public override txGasMaxPerRequest = 1000;
+    uint256 public override txGasMaxPerRequest = 100;
 
     // Engine settings
     uint256 public override fee = 10000000000000000; // 0.01 per participation during survey creation
