@@ -169,10 +169,7 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
 
         Participation memory participation;
         participation.surveyAddr = surveyAddr;
-        participation.surveyOwner = survey.surveyOwner;
-        participation.token = survey.token;
         participation.responses = responses;
-        participation.reward = survey.reward;
         participation.txGas = txGas;
         participation.gasPrice = tx.gasprice;
         participation.partTime = block.timestamp;
