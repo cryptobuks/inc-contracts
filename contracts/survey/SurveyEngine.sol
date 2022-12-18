@@ -155,7 +155,7 @@ contract SurveyEngine is ISurveyEngine, Forwardable, ReentrancyGuard {
         ISurveyImpl surveyImpl = ISurveyImpl(surveyAddr);
         Survey memory survey = surveyImpl.data();
         require(block.timestamp >= survey.startTime, "SurveyEngine: survey not yet open");
-        require(block.timestamp <= survey.endTime, "SurveyEngine: survey closed");
+        require(block.timestamp < survey.endTime, "SurveyEngine: survey closed");
 
         uint256 remainingBudget = surveyImpl.remainingBudget();
         require(remainingBudget >= survey.reward, "SurveyEngine: survey without sufficient budget");

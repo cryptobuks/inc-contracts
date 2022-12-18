@@ -18,9 +18,9 @@ contract SurveyValidator is ISurveyValidator, Ownable, ReentrancyGuard {
     uint256 public titleMaxLength = 128;
     uint256 public descriptionMaxLength = 512;
     uint256 public urlMaxLength = 2048;
-    uint256 public startMaxTime = 864000;// maximum time to start the survey
-    uint256 public rangeMinTime = 86400;// minimum duration time
-    uint256 public rangeMaxTime = 2592000;// maximum duration time
+    uint256 public startMaxTime = 864000;// maximum time to start the survey (10 days)
+    uint256 public rangeMinTime = 86399;// minimum duration time (0d 23:59:59)
+    uint256 public rangeMaxTime = 2591999;// maximum duration time (29d 23:59:59)
     uint256 public questionMaxPerSurvey = 100;
     uint256 public questionMaxLength = 4096;
     uint256 public validatorMaxPerQuestion = 10;
@@ -75,8 +75,8 @@ contract SurveyValidator is ISurveyValidator, Ownable, ReentrancyGuard {
         // Validate date range
         require(survey.startTime >= block.timestamp && survey.startTime < survey.endTime, "SurveyValidator: invalid date range");
         require(survey.startTime <= block.timestamp + startMaxTime, "SurveyValidator: distant start date");
-        require(survey.endTime - survey.startTime >= rangeMinTime, "SurveyValidator: date range too small");
-        require(survey.endTime - survey.startTime <= rangeMaxTime, "SurveyValidator: date range too large");
+        require(survey.endTime - survey.startTime - 1 >= rangeMinTime, "SurveyValidator: date range too small");
+        require(survey.endTime - survey.startTime - 1 <= rangeMaxTime, "SurveyValidator: date range too large");
 
         // Validate budget
         require(survey.budget > 0, "SurveyValidator: budget is zero");

@@ -40,7 +40,7 @@ abstract contract SurveyBase is Context, ISurveyBase {
     }
 
     function isOpened(uint256 offset) external view override returns (bool) {
-        return block.timestamp >= _data.startTime && block.timestamp <= _data.endTime && _data.endTime - block.timestamp >= offset;
+        return block.timestamp >= _data.startTime && block.timestamp < _data.endTime && _data.endTime - block.timestamp > offset;
     }
 
     // ### Questions ###
