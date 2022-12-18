@@ -24,8 +24,8 @@ module.exports = {
       gas: 6721975
     },
     mumbai: {
-      provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_APIKEY}`, 0, 10),
       //provider: () => new HDWalletProvider(MNEMONIC, `https://matic-mumbai.chainstacklabs.com`, 0, 10),
+      provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_APIKEY}`, 0, 10),
       network_id: 80001,
       //confirmations: 2,
       networkCheckTimeout: 1000000,
@@ -33,13 +33,14 @@ module.exports = {
       skipDryRun: true
     },
     matic: {
-      //provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_APIKEY}`, 0, 10),
-      provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-rpc.com`, 0, 20),
+      //provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-rpc.com`, 0, 20),
+      provider: () => new HDWalletProvider(MNEMONIC, `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_APIKEY}`, 0, 20),
       network_id: 137,
-      confirmations: 2,
+      //confirmations: 2,
       networkCheckTimeout: 1000000,
       timeoutBlocks: 200,
-      skipDryRun: true
+      skipDryRun: true,
+      gasPrice: 120000000000
     }
   },
   compilers: {

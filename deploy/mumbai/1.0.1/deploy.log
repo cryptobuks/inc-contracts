@@ -1,0 +1,317 @@
+PS W:\Projects\INC\inc-contracts> truffle migrate --network mumbai
+
+Compiling your contracts...
+===========================
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\LPMigrator.sol
+> Compiling .\contracts\Migrations.sol
+> Compiling .\contracts\TokenInterest.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Context.sol
+> Compiling .\contracts\abstractions\EIP712.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\abstractions\Ownable.sol
+> Compiling .\contracts\abstractions\Pausable.sol
+> Compiling .\contracts\abstractions\ReentrancyGuard.sol
+> Compiling .\contracts\impl\ERC20.sol
+> Compiling .\contracts\impl\ERC20Base.sol
+> Compiling .\contracts\impl\ERC20Permit.sol
+> Compiling .\contracts\interfaces\IERC20.sol
+> Compiling .\contracts\interfaces\IERC20Metadata.sol
+> Compiling .\contracts\interfaces\IERC20Permit.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IHolding.sol
+> Compiling .\contracts\interfaces\ILPMigrator.sol
+> Compiling .\contracts\interfaces\IMeasurement.sol
+> Compiling .\contracts\interfaces\ITokenSeller.sol
+> Compiling .\contracts\libraries\Counters.sol
+> Compiling .\contracts\libraries\ECDSA.sol
+> Compiling .\contracts\libraries\Helper.sol
+> Compiling .\contracts\libraries\Math.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyEngine.sol
+> Compiling .\contracts\survey\SurveyINC.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyINC.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidatorModel.sol
+> Compiling .\contracts\survey\libraries\Integers.sol
+> Compiling .\contracts\survey\libraries\Strings.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\DeflatingERC20.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\Temp.sol
+> Compiling .\contracts\test\TimeManipulator.sol
+> Compiling .\contracts\test\WETH9.sol
+> Compiling .\contracts\uniswapv2\UniswapV2ERC20.sol
+> Compiling .\contracts\uniswapv2\UniswapV2Factory.sol
+> Compiling .\contracts\uniswapv2\UniswapV2Pair.sol
+> Compiling .\contracts\uniswapv2\UniswapV2Router02.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2Callee.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2ERC20.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2Factory.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2Pair.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2Router01.sol
+> Compiling .\contracts\uniswapv2\interfaces\IUniswapV2Router02.sol
+> Compiling .\contracts\uniswapv2\interfaces\IWETH.sol
+> Compiling .\contracts\uniswapv2\libraries\TransferHelper.sol
+> Compiling .\contracts\uniswapv2\libraries\UQ112x112.sol
+> Compiling .\contracts\uniswapv2\libraries\UniswapV2Library.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+2_inc_token.js
+==============
+owner  :: 0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+relayer:: 0xE060e955645a533203512dd3D14302669C9AAC03
+
+   Replacing 'Integers'
+   --------------------
+   > transaction hash:    0xabd822fa94fe6761acceb1a8e83ecfcdcde1f81d3974c4f674a34b08cdeb4308
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x7047E8d8C7E593198e170b99F872c3f8A885891d
+   > block number:        25304321
+   > block timestamp:     1645971273
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.628121771170230432
+   > gas used:            72205 (0x11a0d)
+   > gas price:           2.500000029 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180512502093945 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304322)
+   > confirmation number: 2 (block: 25304323)
+
+   Replacing 'Strings'
+   -------------------
+   > transaction hash:    0xff0ef3c4241842df51fff7edf77492a6026d9426c84b91a3a7dbcedf40323476
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x6B36042A75a8e09553019C8eB7143525539Afb79
+   > block number:        25304325
+   > block timestamp:     1645971293
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.627941258667919872
+   > gas used:            72205 (0x11a0d)
+   > gas price:           2.500000032 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00018051250231056 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304326)
+   > confirmation number: 2 (block: 25304327)
+
+   Replacing 'Helper'
+   ------------------
+   > transaction hash:    0x6c295bf33eee769fbdeca818249d2077bf3e73e86e9f7d1a37e66d47cafcc7d5
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x6f8e58E53091CA278Cd93cda4526941aeFe76637
+   > block number:        25304329
+   > block timestamp:     1645971313
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.627760806165754442
+   > gas used:            72181 (0x119f5)
+   > gas price:           2.50000003 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00018045250216543 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304330)
+   > confirmation number: 2 (block: 25304331)
+
+   Replacing 'Math'
+   ----------------
+   > transaction hash:    0xca31a1b828bd613bd61b74a0e6e44a7caa1c0df83fbdb6cc1b9ae714ebfb449e
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x0910bae0683062F71D1eeEDA416E89FaB4687859
+   > block number:        25304333
+   > block timestamp:     1645971333
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.627580293663516087
+   > gas used:            72205 (0x11a0d)
+   > gas price:           2.500000031 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180512502238355 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304334)
+   > confirmation number: 2 (block: 25304335)
+
+   Replacing 'INCToken'
+   --------------------
+   > transaction hash:    0x4431e02cbf6d6985e77f7b09113749f1ed29abab2dabac2959c23970cdb6aa0d
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x862F97CBF83a9Fc342BBccf000A45E45B71360f2
+   > block number:        25304337
+   > block timestamp:     1645971353
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.618253556029211067
+   > gas used:            3730695 (0x38ed07)
+   > gas price:           2.500000036 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00932673763430502 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304338)
+   > confirmation number: 2 (block: 25304339)
+
+   Replacing 'TokenOffer'
+   ----------------------
+   > transaction hash:    0xf552b6e655c58b1b3f9355a898b5df6d64b3c9e3d5200b05b0d3e368ac1a5f36
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x55e944536A2Eec6De65719D014ce3e3e2f7A8809
+   > block number:        25304340
+   > block timestamp:     1645971368
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.613616770956877221
+   > gas used:            1854714 (0x1c4cfa)
+   > gas price:           2.500000039 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004636785072333846 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304341)
+   > confirmation number: 2 (block: 25304342)
+
+   Replacing 'TokenInterest'
+   -------------------------
+   > transaction hash:    0x15f26af6ab45c8eca87dce5bc4b8369b23892a6c29e51c184d7efff2596b3ab5
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xA32E70d0F94fFbB3B48Dab1905FAF943D152626F
+   > block number:        25304344
+   > block timestamp:     1645971388
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.606735668341274699
+   > gas used:            2752441 (0x29ffb9)
+   > gas price:           2.500000042 gwei
+   > value sent:          0 ETH
+   > total cost:          0.006881102615602522 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304345)
+   > confirmation number: 2 (block: 25304346)
+
+   Replacing 'SurveyINC'
+   ---------------------
+   > transaction hash:    0x0f5d3811342fc8627095a666cb49faab272f48f1ec13a73c1724ce58344f3391
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x864A17c096FD9B1FB37fa5a7d87b6BE5A905aCcc
+   > block number:        25304347
+   > block timestamp:     1645971403
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.594644990628478775
+   > gas used:            4836271 (0x49cbaf)
+   > gas price:           2.500000044 gwei
+   > value sent:          0 ETH
+   > total cost:          0.012090677712795924 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304348)
+   > confirmation number: 2 (block: 25304349)
+
+   Replacing 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0x91960b1bfdf560d94d9d34f8c3ea24ff0b1f3b97a991f9be7c06db69a7422dc2
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x96860aaDFD1095309a967521D2FaafBF82329E2F
+   > block number:        25304351
+   > block timestamp:     1645971423
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.58213328290326804
+   > gas used:            5004683 (0x4c5d8b)
+   > gas price:           2.500000045 gwei
+   > value sent:          0 ETH
+   > total cost:          0.012511707725210735 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304352)
+   > confirmation number: 2 (block: 25304353)
+
+   Replacing 'INCForwarder'
+   ------------------------
+   > transaction hash:    0x1e77701fa477eb7c759adcc39bf65c9c0c64e894ade29998f836da48da675459
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xCC151B11EDF5AB33b080A888c7f490D71414bAf4
+   > block number:        25304354
+   > block timestamp:     1645971438
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.578630065340210125
+   > gas used:            1401287 (0x1561c7)
+   > gas price:           2.500000045 gwei
+   > value sent:          0 ETH
+   > total cost:          0.003503217563057915 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304355)
+   > confirmation number: 2 (block: 25304356)
+
+   Replacing 'SurveyEngine'
+   ------------------------
+   > transaction hash:    0x67105c7e18e563389bd06e4d3f3e3720b9e4d918f6564ccbe84fc1d7ed33c103
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x1Fe8704256bae51197CaAc85c3916AeCb4385484
+   > block number:        25304358
+   > block timestamp:     1645971458
+   > account:             0x535A762e7EE02c9FAfc7607Bf6c5f7aF74a47e92
+   > balance:             8.571243250198383277
+   > gas used:            2954726 (0x2d15e6)
+   > gas price:           2.500000048 gwei
+   > value sent:          0 ETH
+   > total cost:          0.007386815141826848 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 25304359)
+   > confirmation number: 2 (block: 25304360)
+token:: 0x862F97CBF83a9Fc342BBccf000A45E45B71360f2
+offer:: 0x55e944536A2Eec6De65719D014ce3e3e2f7A8809
+interest:: 0xA32E70d0F94fFbB3B48Dab1905FAF943D152626F
+survey:: 0x864A17c096FD9B1FB37fa5a7d87b6BE5A905aCcc
+validator:: 0x96860aaDFD1095309a967521D2FaafBF82329E2F
+forwarder:: 0xCC151B11EDF5AB33b080A888c7f490D71414bAf4
+engine:: 0x1Fe8704256bae51197CaAc85c3916AeCb4385484
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.0570590334739411 ETH
+
+
+3_inc_swap.js
+=============
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   11
+> Final cost:          0.0570590334739411 ETH

@@ -1,0 +1,699 @@
+PS W:\Projects\INC\inc-contracts> truffle migrate --network mumbai --compile-none
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compilation skipped because --compile-none option was passed.
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_inc_token.js
+==============
+
+   Deploying 'INCToken'
+   --------------------
+   > transaction hash:    0x766f74bb009f3c5aedea3b68bb5b002db2df2db06733790538913980ec1539d9
+   > Blocks: 4            Seconds: 20
+   > contract address:    0xEB9720B13A778dB6d14a0aF5614b1DC8E2A47595
+   > block number:        29416357
+   > block timestamp:     1669814127
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.05860127391408623
+   > gas used:            1996041 (0x1e7509)
+   > gas price:           2.500000017 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004990102533932697 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.004990102533932697 ETH
+
+
+2_inc_protocol.js
+=================
+
+   Deploying 'StringUtils'
+   -----------------------
+   > transaction hash:    0xc3fed0d31fd5d115318e10ba0566b397d114c5189efb31d2e8ce1e55f81f6790
+   > Blocks: 3            Seconds: 16
+   > contract address:    0x2801F0b6b60F0291560F09Ed4aA42FF374d7B126
+   > block number:        29416362
+   > block timestamp:     1669814152
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.058420731412930758
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000016 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542501155472 ETH
+
+
+   Deploying 'IntUtils'
+   --------------------
+   > transaction hash:    0xa276152394b213ac50dfb89ef486bccad3d3c7f8d628491d2306739aceb166a0
+   > Blocks: 3            Seconds: 17
+   > contract address:    0x14202FA99AE3cBb09d577553581B7E2E3668093D
+   > block number:        29416367
+   > block timestamp:     1669814177
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.058240188911847503
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000015 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542501083255 ETH
+
+
+   Deploying 'TransferHelper'
+   --------------------------
+   > transaction hash:    0x75730dcc9dfb1418d7971b308c6b6e7f2d0c03300b1fdcc1e31a9c4a116c38f4
+   > Blocks: 3            Seconds: 16
+   > contract address:    0x0c0d4602Aeec2C9599f03792Af729A8B62e178d9
+   > block number:        29416371
+   > block timestamp:     1669814197
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.058059646410980899
+   > gas used:            72217 (0x11a19)
+   > gas price:           2.500000012 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000180542500866604 ETH
+
+
+   Deploying 'SurveyFactory'
+   -------------------------
+   > transaction hash:    0xb52589a011c740be0a4abbef2c78bdcd5e6727abc5132d57bb5a003d0c3114d8
+   > Blocks: 4            Seconds: 21
+   > contract address:    0x065CD7A56E57a7d3C45dE5F698E297AA3cA80F0c
+   > block number:        29416377
+   > block timestamp:     1669814227
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.047301771355039949
+   > gas used:            4303150 (0x41a92e)
+   > gas price:           2.500000013 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01075787505594095 ETH
+
+
+   Deploying 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0xbbe46e0322318c6c25fc848d19746acba9d510918f01448819287d1c878707bd
+   > Blocks: 4            Seconds: 16
+   > contract address:    0x5Df3EDEc3e805f8386599413D81660a413918007
+   > block number:        29416382
+   > block timestamp:     1669814252
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.036830306304776917
+   > gas used:            4188586 (0x3fe9aa)
+   > gas price:           2.500000012 gwei
+   > value sent:          0 ETH
+   > total cost:          0.010471465050263032 ETH
+
+
+   Deploying 'SurveyConfig'
+   ------------------------
+   > transaction hash:    0x5c9288d88f714c45f7827e62ddf939443b7be67eabc837842fc409ddc65a05c3
+   > Blocks: 3            Seconds: 14
+   > contract address:    0xd48E591c37fC627E0D76107E778a451F352f9c21
+   > block number:        29416387
+   > block timestamp:     1669814278
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.035253648797208961
+   > gas used:            630663 (0x99f87)
+   > gas price:           2.500000012 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001576657507567956 ETH
+
+
+   Deploying 'SurveyStorage'
+   -------------------------
+   > transaction hash:    0x1a10ae0aa3ea8179fe8fd42c22f3cf9b64f215726676ea302fbafd83344a2f17
+   > Blocks: 3            Seconds: 13
+   > contract address:    0xd37930bDae2C760f316A040851C2E852bB3C653e
+   > block number:        29416391
+   > block timestamp:     1669814298
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.027727226264092702
+   > gas used:            3010569 (0x2df009)
+   > gas price:           2.500000011 gwei
+   > value sent:          0 ETH
+   > total cost:          0.007526422533116259 ETH
+
+
+   Deploying 'INCForwarder'
+   ------------------------
+   > transaction hash:    0xd72f241d33314bdba9cc6cc93042ea6628a88d6ae0356a1a48046467f465e7fd
+   > Blocks: 3            Seconds: 17
+   > contract address:    0xc4f438d4C04e6cc785894fE2C4667cA6D695B3b7
+   > block number:        29416396
+   > block timestamp:     1669814323
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.025041906253351422
+   > gas used:            1074128 (0x1063d0)
+   > gas price:           2.50000001 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00268532001074128 ETH
+
+
+   Deploying 'SurveyEngine'
+   ------------------------
+   > transaction hash:    0x793a78b8e73720740ccd0a98fd7bf955a94cb42172d2e090420a8eb5c0e6e3f5
+   > Blocks: 3            Seconds: 13
+   > contract address:    0x2B30353f727F2Ea2592dc5d1a1Fd85198A035C47
+   > block number:        29416400
+   > block timestamp:     1669814343
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.017725758724086832
+   > gas used:            2926459 (0x2ca77b)
+   > gas price:           2.50000001 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00731614752926459 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.040875515189999398 ETH
+
+
+3_inc_governor.js
+=================
+
+   Deploying 'TimelockController'
+   ------------------------------
+   > transaction hash:    0x106fa04b2e214bb1dc041e95cf7dac760d5777c27e8fde1cd7df1bebd1f74b1b
+   > Blocks: 6            Seconds: 29
+   > contract address:    0x30AdF4d6Dc5184355a036Bd4fb281a2E8B7C75B2
+   > block number:        29416451
+   > block timestamp:     1669814599
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.011759145836880487
+   > gas used:            1914809 (0x1d37b9)
+   > gas price:           2.500000196 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004787022875302564 ETH
+
+
+   Deploying 'INCGovernor'
+   -----------------------
+   > transaction hash:    0xed27d3fa4e32b32cca3ddb1ecd7ef7930bc1bf4b0648f5bc3780d74c0143dfb9
+   > Blocks: 3            Seconds: 16
+   > contract address:    0xBcB32931eEe3AF47a1A60BA8b63651e5338Eb7a8
+   > block number:        29416456
+   > block timestamp:     1669814624
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.002732484605644063
+   > gas used:            3610664 (0x371828)
+   > gas price:           2.500000341 gwei
+   > value sent:          0 ETH
+   > total cost:          0.009026661231236424 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.013813684106538988 ETH
+
+
+4_inc_tokenlock.js
+==================
+
+   Deploying 'TokenLock'
+   ---------------------
+   > transaction hash:    0xe3c1146c568c7cc8eb91cb6a7dd69e38ba7cfaa83bdc6bcf3329c6bc64b99858
+   > Blocks: 2            Seconds: 15
+   > contract address:    0xA361C2E83702865fAFc125c37c93e79D1Ae52fF1
+   > block number:        29416467
+   > block timestamp:     1669814679
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             7.001340924015004389
+   > gas used:            477615 (0x749af)
+   > gas price:           2.500001139 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001194038044003485 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.001194038044003485 ETH
+
+
+5_distribute_tokens.js
+======================
+Token balances:
+  DAO: 30000000000
+  Contributors: 25000000000
+  TokenLock: 45000000000
+    Locked DAO: 45000000000
+  TOTAL: 100000000000
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+6_initial_offer.js
+==================
+
+   Deploying 'TokenOffer'
+   ----------------------
+   > transaction hash:    0x692a9ef5485810a683a0baf46beb6fefb150b3b443cf583e721b7f0a515229db
+   > Blocks: 3            Seconds: 12
+   > contract address:    0x1dF7a20997F76fb9Bb7a39f64B74eb2f3d56Af22
+   > block number:        29416481
+   > block timestamp:     1669814749
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             6.998950219043418892
+   > gas used:            767308 (0xbb54c)
+   > gas price:           2.500005814 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001918274461128712 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.001918274461128712 ETH
+
+
+98_transfer_ownership.js
+========================
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+99_write_abis.js
+================
+
+Addresses:
+  owner: 0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+  custody: 0x545728f530bF907d8c1eb279Aa95bE48cf175443
+  relayers: 0xD07e4Fb8b2BbA4422c64Ad68822D11235694bA84,0x0cC1ca329d9ED4ac79882ABbb10673A4e533FdEc,0x23Ea365F578447ef70e26b60f77a759F092aD246,0x12f5CcE584A0658ED9fa9070384Aa8783aC1eA4c,0xD860C5Dc44AAFd8904773f596BC256fF8fB3035e,0x2441462231F5e72de890701746a42642380bD3da,0x973Fb9eE2911A502D94f624f5dfd56a170AeF6Ef,0xBb12C76EF2242E91C2AaF21854383c9DB69EF3b2   
+  token: 0xEB9720B13A778dB6d14a0aF5614b1DC8E2A47595
+  offer: 0x1dF7a20997F76fb9Bb7a39f64B74eb2f3d56Af22
+  config: 0xd48E591c37fC627E0D76107E778a451F352f9c21
+  storage: 0xd37930bDae2C760f316A040851C2E852bB3C653e
+  factory: 0x065CD7A56E57a7d3C45dE5F698E297AA3cA80F0c
+  validator: 0x5Df3EDEc3e805f8386599413D81660a413918007
+  forwarder: 0xc4f438d4C04e6cc785894fE2C4667cA6D695B3b7
+  engine: 0x2B30353f727F2Ea2592dc5d1a1Fd85198A035C47
+  timelock: 0x30AdF4d6Dc5184355a036Bd4fb281a2E8B7C75B2
+  governor: 0xBcB32931eEe3AF47a1A60BA8b63651e5338Eb7a8
+  tokenLock: 0xA361C2E83702865fAFc125c37c93e79D1Ae52fF1
+
+Success.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+Summary
+=======
+> Total deployments:   14
+> Final cost:          0.06279161433560328 ETH
+
+
+PS W:\Projects\INC\inc-contracts> truffle run verify TokenLock --network mumbai  
+⚠ Loading testnet data
+Verifying TokenLock
+Pass - Verified: https://mumbai.polygonscan.com/address/0xA361C2E83702865fAFc125c37c93e79D1Ae52fF1#code
+Successfully verified 1 contract(s).
+
+
+
+PS W:\Projects\INC\inc-contracts> truffle compile
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compiling @openzeppelin\contracts\\security\ReentrancyGuard.sol
+> Compiling @openzeppelin\contracts\access\AccessControl.sol
+> Compiling @openzeppelin\contracts\access\IAccessControl.sol
+> Compiling @openzeppelin\contracts\access\Ownable.sol
+> Compiling @openzeppelin\contracts\governance\Governor.sol
+> Compiling @openzeppelin\contracts\governance\IGovernor.sol
+> Compiling @openzeppelin\contracts\governance\TimelockController.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorCountingSimple.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorSettings.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorTimelockControl.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotes.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotesQuorumFraction.sol
+> Compiling @openzeppelin\contracts\governance\extensions\IGovernorTimelock.sol
+> Compiling @openzeppelin\contracts\governance\utils\IVotes.sol
+> Compiling @openzeppelin\contracts\token\ERC1155\IERC1155Receiver.sol
+> Compiling @openzeppelin\contracts\token\ERC20\ERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\IERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\ERC20Votes.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\IERC20Metadata.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-ERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-IERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC721\IERC721Receiver.sol
+> Compiling @openzeppelin\contracts\utils\Address.sol
+> Compiling @openzeppelin\contracts\utils\Checkpoints.sol
+> Compiling @openzeppelin\contracts\utils\Context.sol
+> Compiling @openzeppelin\contracts\utils\Counters.sol
+> Compiling @openzeppelin\contracts\utils\Strings.sol
+> Compiling @openzeppelin\contracts\utils\Timers.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\ECDSA.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\draft-EIP712.sol
+> Compiling @openzeppelin\contracts\utils\introspection\ERC165.sol
+> Compiling @openzeppelin\contracts\utils\introspection\IERC165.sol
+> Compiling @openzeppelin\contracts\utils\math\Math.sol
+> Compiling @openzeppelin\contracts\utils\math\SafeCast.sol
+> Compiling @openzeppelin\contracts\utils\structs\DoubleEndedQueue.sol
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\TokenLock.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IWETH.sol
+> Compiling .\contracts\libraries\IntUtils.sol
+> Compiling .\contracts\libraries\SafeERC20Namer.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\libraries\TransferHelper.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyConfig.sol
+> Compiling .\contracts\survey\SurveyEngine.sol
+> Compiling .\contracts\survey\SurveyFactory.sol
+> Compiling .\contracts\survey\SurveyImpl.sol
+> Compiling .\contracts\survey\SurveyStorage.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyConfig.sol
+> Compiling .\contracts\survey\interfaces\ISurveyEngine.sol
+> Compiling .\contracts\survey\interfaces\ISurveyFactory.sol
+> Compiling .\contracts\survey\interfaces\ISurveyImpl.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\SafeERC20NamerTest.sol
+> Compiling .\contracts\test\StringUtilsTest.sol
+> Compiling .\contracts\test\WETH.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.7+commit.e28d00a7.Emscripten.clang
+PS W:\Projects\INC\inc-contracts> truffle migrate -f 100 --to 100 --network mumbai --compile-none
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compilation skipped because --compile-none option was passed.
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20574175 (0x139efdf)
+
+
+100_migrate_engine.js
+=====================
+
+   Replacing 'SurveyStorage'
+   -------------------------
+   > transaction hash:    0x1ee47a38e08da5560378428bc1897d4a615b74977399c252e84e78da877c4444
+   > Blocks: 1            Seconds: 8
+   > contract address:    0xe6AA6c9B2EDA24163F189b3Ca54CACd45e97D87a
+   > block number:        29449887
+   > block timestamp:     1669982301
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             5.590610238587831282
+   > gas used:            3191645 (0x30b35d)
+   > gas price:           2.50000001 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00797911253191645 ETH
+
+
+   Replacing 'SurveyEngine'
+   ------------------------
+   > transaction hash:    0x92880129f0318bdd4bd60f12377eaf32a9e0663d2133586ee864fb21f0e824e9
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xa8F2E9D7ed1b15d7b096D8E2F91EAd65cEaB1B6F
+   > block number:        29449889
+   > block timestamp:     1669982311
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             5.583294091058566692
+   > gas used:            2926459 (0x2ca77b)
+   > gas price:           2.50000001 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00731614752926459 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.01529526006118104 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.01529526006118104 ETH
+
+
+
+PS W:\Projects\INC\inc-contracts> truffle compile --reset
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compiling @openzeppelin\contracts\\security\ReentrancyGuard.sol
+> Compiling @openzeppelin\contracts\access\AccessControl.sol
+> Compiling @openzeppelin\contracts\access\IAccessControl.sol
+> Compiling @openzeppelin\contracts\access\Ownable.sol
+> Compiling @openzeppelin\contracts\governance\Governor.sol
+> Compiling @openzeppelin\contracts\governance\IGovernor.sol
+> Compiling @openzeppelin\contracts\governance\TimelockController.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorCountingSimple.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorSettings.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorTimelockControl.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotes.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotesQuorumFraction.sol
+> Compiling @openzeppelin\contracts\governance\extensions\IGovernorTimelock.sol
+> Compiling @openzeppelin\contracts\governance\utils\IVotes.sol
+> Compiling @openzeppelin\contracts\token\ERC1155\IERC1155Receiver.sol
+> Compiling @openzeppelin\contracts\token\ERC20\ERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\IERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\ERC20Votes.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\IERC20Metadata.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-ERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-IERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC721\IERC721Receiver.sol
+> Compiling @openzeppelin\contracts\utils\Address.sol
+> Compiling @openzeppelin\contracts\utils\Checkpoints.sol
+> Compiling @openzeppelin\contracts\utils\Context.sol
+> Compiling @openzeppelin\contracts\utils\Counters.sol
+> Compiling @openzeppelin\contracts\utils\Strings.sol
+> Compiling @openzeppelin\contracts\utils\Timers.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\ECDSA.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\draft-EIP712.sol
+> Compiling @openzeppelin\contracts\utils\introspection\ERC165.sol
+> Compiling @openzeppelin\contracts\utils\introspection\IERC165.sol
+> Compiling @openzeppelin\contracts\utils\math\Math.sol
+> Compiling @openzeppelin\contracts\utils\math\SafeCast.sol
+> Compiling @openzeppelin\contracts\utils\structs\DoubleEndedQueue.sol
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\TokenLock.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IWETH.sol
+> Compiling .\contracts\libraries\IntUtils.sol
+> Compiling .\contracts\libraries\SafeERC20Namer.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\libraries\TransferHelper.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyConfig.sol
+> Compiling .\contracts\survey\SurveyEngine.sol
+> Compiling .\contracts\survey\SurveyFactory.sol
+> Compiling .\contracts\survey\SurveyImpl.sol
+> Compiling .\contracts\survey\SurveyStorage.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyConfig.sol
+> Compiling .\contracts\survey\interfaces\ISurveyEngine.sol
+> Compiling .\contracts\survey\interfaces\ISurveyFactory.sol
+> Compiling .\contracts\survey\interfaces\ISurveyImpl.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\SafeERC20NamerTest.sol
+> Compiling .\contracts\test\StringUtilsTest.sol
+> Compiling .\contracts\test\WETH.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.7+commit.e28d00a7.Emscripten.clang
+PS W:\Projects\INC\inc-contracts> truffle migrate -f 100 --to 101 --network mumbai --compile-none
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compilation skipped because --compile-none option was passed.
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+100_migrate_validator.js
+========================
+
+   Replacing 'StringUtils'
+   -----------------------
+   > transaction hash:    0xc98a20a61198ad855d52a90d1c695066bdbfe202741deba655fc275e48d6b633
+   > Blocks: 1            Seconds: 8
+   > contract address:    0x7580Bfa68322f0CF096841557db172eC7e699a75
+   > block number:        29501251
+   > block timestamp:     1670239924
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             3.958445414645357528
+   > gas used:            72205 (0x11a0d)
+   > gas price:           2.500000026 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00018051250187733 ETH
+
+
+   Replacing 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0xd7834421c2c9f966a1835c78694a00675d5655f4e6a877ffc9b9aa2357c1832d
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x38FeD4BAD58560a3877e06d10B01ebEfFD7D59b2
+   > block number:        29501253
+   > block timestamp:     1670239934
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             3.946613639522307068
+   > gas used:            4732710 (0x483726)
+   > gas price:           2.500000026 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01183177512305046 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.01201228762492779 ETH
+
+
+101_write_abis.js
+=================
+
+Success.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.01201228762492779 ETH
+
+
+
+PS W:\Projects\INC\inc-contracts> truffle compile --reset
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\TokenLock.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IWETH.sol
+> Compiling .\contracts\libraries\IntUtils.sol
+> Compiling .\contracts\libraries\SafeERC20Namer.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\libraries\TransferHelper.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyConfig.sol
+> Compiling .\contracts\survey\SurveyEngine.sol
+> Compiling .\contracts\survey\SurveyFactory.sol
+> Compiling .\contracts\survey\SurveyImpl.sol
+> Compiling .\contracts\survey\SurveyStorage.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyConfig.sol
+> Compiling .\contracts\survey\interfaces\ISurveyEngine.sol
+> Compiling .\contracts\survey\interfaces\ISurveyFactory.sol
+> Compiling .\contracts\survey\interfaces\ISurveyImpl.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\SafeERC20NamerTest.sol
+> Compiling .\contracts\test\StringUtilsTest.sol
+> Compiling .\contracts\test\WETH.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.7+commit.e28d00a7.Emscripten.clang
+PS W:\Projects\INC\inc-contracts> truffle migrate -f 100 --to 101 --network mumbai --compile-none
+⚠ Loading testnet data
+
+Compiling your contracts...
+===========================
+> Compilation skipped because --compile-none option was passed.
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20695012 (0x13bc7e4)
+
+
+100_migrate_validator.js
+========================
+
+   Replacing 'StringUtils'
+   -----------------------
+   > transaction hash:    0x3b9c638ef38ff80405d1c735593ae5ad66021bc00e27cd4e21e47f97bcce1430
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x959D6cCa59C5DB05c77d08334Ab1763773b48143
+   > block number:        29523237
+   > block timestamp:     1670350223
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             4.045832077319132049
+   > gas used:            72217 (0x11a19)
+   > gas price:           9.765286599 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000705219702319983 ETH
+
+
+   Replacing 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0xed1aeb404ecf0349d89e7d9688e060697a0b39e960c42df2c817afea9fde9025
+   > Blocks: 2            Seconds: 9
+   > contract address:    0xd1019E08aC5d7e3fB546d5ef4f3C7D18008644C7
+   > block number:        29523240
+   > block timestamp:     1670350238
+   > account:             0xd60895f56be15E15fc450bcad08f97937Eb6D31a
+   > balance:             3.999320548248650836
+   > gas used:            4392677 (0x4306e5)
+   > gas price:           10.588424569 gwei
+   > value sent:          0 ETH
+   > total cost:          0.046511529070481213 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.047216748772801196 ETH
+
+
+101_write_abis.js
+=================
+
+Success.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.047216748772801196 ETH
+

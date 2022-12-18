@@ -1,0 +1,454 @@
+W:\Projects\INC\inc-contracts>truffle compile --reset
+⚠ Loading mainnet data
+
+Compiling your contracts...
+===========================
+> Compiling @openzeppelin\contracts\\security\ReentrancyGuard.sol
+> Compiling @openzeppelin\contracts\access\AccessControl.sol
+> Compiling @openzeppelin\contracts\access\IAccessControl.sol
+> Compiling @openzeppelin\contracts\access\Ownable.sol
+> Compiling @openzeppelin\contracts\governance\Governor.sol
+> Compiling @openzeppelin\contracts\governance\IGovernor.sol
+> Compiling @openzeppelin\contracts\governance\TimelockController.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorCountingSimple.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorSettings.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorTimelockControl.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotes.sol
+> Compiling @openzeppelin\contracts\governance\extensions\GovernorVotesQuorumFraction.sol
+> Compiling @openzeppelin\contracts\governance\extensions\IGovernorTimelock.sol
+> Compiling @openzeppelin\contracts\governance\utils\IVotes.sol
+> Compiling @openzeppelin\contracts\token\ERC1155\IERC1155Receiver.sol
+> Compiling @openzeppelin\contracts\token\ERC20\ERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\IERC20.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\ERC20Votes.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\IERC20Metadata.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-ERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC20\extensions\draft-IERC20Permit.sol
+> Compiling @openzeppelin\contracts\token\ERC721\IERC721Receiver.sol
+> Compiling @openzeppelin\contracts\utils\Address.sol
+> Compiling @openzeppelin\contracts\utils\Checkpoints.sol
+> Compiling @openzeppelin\contracts\utils\Context.sol
+> Compiling @openzeppelin\contracts\utils\Counters.sol
+> Compiling @openzeppelin\contracts\utils\Strings.sol
+> Compiling @openzeppelin\contracts\utils\Timers.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\ECDSA.sol
+> Compiling @openzeppelin\contracts\utils\cryptography\draft-EIP712.sol
+> Compiling @openzeppelin\contracts\utils\introspection\ERC165.sol
+> Compiling @openzeppelin\contracts\utils\introspection\IERC165.sol
+> Compiling @openzeppelin\contracts\utils\math\Math.sol
+> Compiling @openzeppelin\contracts\utils\math\SafeCast.sol
+> Compiling @openzeppelin\contracts\utils\structs\DoubleEndedQueue.sol
+> Compiling .\contracts\INCForwarder.sol
+> Compiling .\contracts\INCGovernor.sol
+> Compiling .\contracts\INCToken.sol
+> Compiling .\contracts\TokenLock.sol
+> Compiling .\contracts\TokenOffer.sol
+> Compiling .\contracts\abstractions\Forwardable.sol
+> Compiling .\contracts\abstractions\Manageable.sol
+> Compiling .\contracts\interfaces\IForwarder.sol
+> Compiling .\contracts\interfaces\IWETH.sol
+> Compiling .\contracts\libraries\IntUtils.sol
+> Compiling .\contracts\libraries\SafeERC20Namer.sol
+> Compiling .\contracts\libraries\StringUtils.sol
+> Compiling .\contracts\libraries\TransferHelper.sol
+> Compiling .\contracts\survey\SurveyBase.sol
+> Compiling .\contracts\survey\SurveyValidator.sol
+> Compiling .\contracts\survey\interfaces\ISurveyBase.sol
+> Compiling .\contracts\survey\interfaces\ISurveyConfig.sol
+> Compiling .\contracts\survey\interfaces\ISurveyEngine.sol
+> Compiling .\contracts\survey\interfaces\ISurveyFactory.sol
+> Compiling .\contracts\survey\interfaces\ISurveyImpl.sol
+> Compiling .\contracts\survey\interfaces\ISurveyModel.sol
+> Compiling .\contracts\survey\interfaces\ISurveyStorage.sol
+> Compiling .\contracts\survey\interfaces\ISurveyValidator.sol
+> Compiling .\contracts\test\Console.sol
+> Compiling .\contracts\test\ERC20Test.sol
+> Compiling .\contracts\test\SafeERC20NamerTest.sol
+> Compiling .\contracts\test\StringUtilsTest.sol
+> Compiling .\contracts\test\WETH.sol
+> Artifacts written to W:\Projects\INC\inc-contracts\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.7+commit.e28d00a7.Emscripten.clang
+
+W:\Projects\INC\inc-contracts>set NODE_ENV=prod&&truffle migrate --network matic --compile-none
+⚠ Loading mainnet data
+
+Compiling your contracts...
+===========================
+> Compilation skipped because --compile-none option was passed.
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      137
+> Block gas limit: 25086959 (0x17ecbef)
+
+
+1_inc_token.js
+==============
+
+   Deploying 'INCToken'
+   --------------------
+   > transaction hash:    0xf0b45d0f381c97d525e05f26ae042617d27c1fa182f634d83094600428967e31
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x07833afE46E945296e842e295DC6FCB329E38899
+   > block number:        36988730
+   > block timestamp:     1671387832
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             881.609708457364676
+   > gas used:            1996041 (0x1e7509)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.23952492 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.23952492 ETH
+
+
+2_inc_protocol.js
+=================
+
+   Deploying 'StringUtils'
+   -----------------------
+   > transaction hash:    0x51186dc4406b4f45337da8ffd79e591db1e9fe3658037790f0e54bf31b801a60
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x96ceD2fbBDc4885fd31d576cb61bE22b7E15F661
+   > block number:        36988734
+   > block timestamp:     1671387840
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             881.601042417364676
+   > gas used:            72217 (0x11a19)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00866604 ETH
+
+
+   Deploying 'IntUtils'
+   --------------------
+   > transaction hash:    0xe3cfbd2a81aec1a5b24a4394c704ea8a0534ec19943119547b02fb5dffbc8232
+   > Blocks: 0            Seconds: 4
+   > contract address:    0x4f04Fad027fEF4B1f61D75c1878789793413c90e
+   > block number:        36988736
+   > block timestamp:     1671387848
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             881.592376377364676
+   > gas used:            72217 (0x11a19)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00866604 ETH
+
+
+   Deploying 'TransferHelper'
+   --------------------------
+   > transaction hash:    0x66be1735f5ff356bf4ba6f1b9b11170ef4b673c7969f4c8ad623dec235a0b572
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xA72C78B58a52603a1E658B1C9bCE92c593C60cD5
+   > block number:        36988740
+   > block timestamp:     1671387856
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             881.583710337364676
+   > gas used:            72217 (0x11a19)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00866604 ETH
+
+
+   Deploying 'SurveyFactory'
+   -------------------------
+   > transaction hash:    0x324aed7e53e55512192d9cd601105508a3aa8ad8dc444fb70f14726a9c7c2ed8
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x3607B52c00D3665302f016EfB568B14fa9C3ee83
+   > block number:        36988744
+   > block timestamp:     1671387864
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             881.067361137364676
+   > gas used:            4302910 (0x41a83e)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.5163492 ETH
+
+
+   Deploying 'SurveyValidator'
+   ---------------------------
+   > transaction hash:    0x95a5986f5078b806fe0ff54de4634f6ce3c45c57b127de5e83266cf125092137
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xc6F391aBA8F8cb5c3D698432E43d3d718CaF8e7C
+   > block number:        36988748
+   > block timestamp:     1671387872
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             880.529943417364676
+   > gas used:            4478481 (0x445611)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.53741772 ETH
+
+
+   Deploying 'SurveyConfig'
+   ------------------------
+   > transaction hash:    0x501829a47f19b45054b66d9490d27cfa0cf1fb410e24c55ec31c0e00e68af2a1
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xE06cC1927423CB020e9aDa389F74B2834fa7eB9A
+   > block number:        36988752
+   > block timestamp:     1671387880
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             880.454267217364676
+   > gas used:            630635 (0x99f6b)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0756762 ETH
+
+
+   Deploying 'SurveyStorage'
+   -------------------------
+   > transaction hash:    0x50aa3fc722305db4976de4272f0211a54fc147fa121048400a07e24223cb6265
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x8ca11A221b221647645dDBf8bB380886Ae645478
+   > block number:        36988756
+   > block timestamp:     1671387888
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             880.064969577364676
+   > gas used:            3244147 (0x318073)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.38929764 ETH
+
+
+   Deploying 'INCForwarder'
+   ------------------------
+   > transaction hash:    0x6251e6c20d062a7faf22cbd126769f228e4b23ac1a9741dfc183340d94eb204f
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x4e493b52aa191fA82ACd9327A0beb0f50Df19457
+   > block number:        36988760
+   > block timestamp:     1671387896
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             879.936074217364676
+   > gas used:            1074128 (0x1063d0)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.12889536 ETH
+
+
+   Deploying 'SurveyEngine'
+   ------------------------
+   > transaction hash:    0xa2ca04cb673f2dc9b5645ecd4128addddc26c73fda441887e7dae58e31695b7a
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x4f1Aa41a535Ede6AB321ce3C39597123B13391e0
+   > block number:        36988763
+   > block timestamp:     1671387902
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             879.584819937364676
+   > gas used:            2927119 (0x2caa0f)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.35125428 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          2.02488852 ETH
+
+
+3_inc_governor.js
+=================
+
+   Deploying 'TimelockController'
+   ------------------------------
+   > transaction hash:    0x4434c595d3ad2aefc9e0b412969f67f79b251e624a6d629998cc9a3ad2fa39c0
+   > Blocks: 3            Seconds: 4
+   > contract address:    0xcA0fc4eE85b8AFF05dAC6510a1d3452E7d8C56ea
+   > block number:        36988823
+   > block timestamp:     1671388026
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             879.241410537364676
+   > gas used:            1914809 (0x1d37b9)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.22977708 ETH
+
+
+   Deploying 'INCGovernor'
+   -----------------------
+   > transaction hash:    0xb1524f09406dcbcbdb2d7ca82b8c4c993c5f831e730f5935b105df17a0a4da13
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x9a342e71abEab4B9F47Daf520D4C8df3bE938153
+   > block number:        36988827
+   > block timestamp:     1671388034
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             878.808130857364676
+   > gas used:            3610664 (0x371828)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.43327968 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.66305676 ETH
+
+
+4_inc_tokenlock.js
+==================
+
+   Deploying 'TokenLock'
+   ---------------------
+   > transaction hash:    0xfde866da715836e9cd2a3d74ef99b79b0070bc33b0d145264898894e501f22dd
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x0f43e8D8612255803293747302435D6846042F2d
+   > block number:        36988834
+   > block timestamp:     1671388048
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             878.741335977364676
+   > gas used:            477615 (0x749af)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0573138 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0573138 ETH
+
+
+5_distribute_tokens.js
+======================
+Token balances:
+  DAO: 30000000000
+  Contributors: 25000000000
+  TokenLock: 45000000000
+    Locked DAO: 45000000000
+  TOTAL: 100000000000
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+6_initial_offer.js
+==================
+
+   Deploying 'TokenOffer'
+   ----------------------
+   > transaction hash:    0x65f1262bd41dc005fa3a499b1c9b3edbfc12ea4ddd438eadab8cb45dfc2f3d09
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xa6B479Da6Dd33954Af2C847CAb4b0097fBaF7681
+   > block number:        36988844
+   > block timestamp:     1671388068
+   > account:             0x11498578cc594f33b921d20bCCD17974320d1bC2
+   > balance:             878.623013217364676
+   > gas used:            797051 (0xc297b)
+   > gas price:           120 gwei
+   > value sent:          0 ETH
+   > total cost:          0.09564612 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.09564612 ETH
+
+
+98_transfer_ownership.js
+========================
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+99_write_addresses.js
+=====================
+
+Addresses:
+  owner: 0x11498578cc594f33b921d20bCCD17974320d1bC2
+  custody: 0x95834947f06ab0564d10667744cEAF057974F5de
+  relayers: 0xbe6bbAc74a50456cb0abC7eCefd18ACD3AeEEA15,0x1D7833c681407E4A6B4A72C2AA26Aadb7aa32AEf,0x8d7fb50F7f87c63C718f31a8d10362349720b56d,0xAE668d8277c0f105c7F347288a513F9D63C475a6,0x83d5bEb57691479Cf8D5be6B4915A515af32C755,0xc634904b58f8aCB442DE4cA1333EECFe1479B46d,0x779683d56Bf2Ac00bf98684937d94150d9e76C1e,0xa0B2b15d462eCe21A371eB42f08B7337FEf60511,0x71258FbB7Bf5197545553364390620A710801221,0xa8fBD358e95B907EC9C44c4171845f632C490A3B,0xCde0e1f741547E63A00E5Fecf788a3Ab5EE76295,0x16Dfca2645d0f9fFCfa943dD0024672c42Bb6177,0x85642d633b52C6091Eb46010eD5D13306bD30ed8,0x757DE72FA671c77aBa8b1b817175d1Eff2a4780A,0x021Fd6b35277C26Cf0E93d5048E5dF108B06D4f5,0x7B82c402CCC500D872581b44c8D3c8D823FD158B,0x72512819fe600E51f02F83c088d023DdF39723cD,0x264A7479cd8bCD616323dF89c2534CCb2C8bC71A
+  token: 0x07833afE46E945296e842e295DC6FCB329E38899
+  offer: 0xa6B479Da6Dd33954Af2C847CAb4b0097fBaF7681
+  config: 0xE06cC1927423CB020e9aDa389F74B2834fa7eB9A
+  storage: 0x8ca11A221b221647645dDBf8bB380886Ae645478
+  factory: 0x3607B52c00D3665302f016EfB568B14fa9C3ee83
+  validator: 0xc6F391aBA8F8cb5c3D698432E43d3d718CaF8e7C
+  forwarder: 0x4e493b52aa191fA82ACd9327A0beb0f50Df19457
+  engine: 0x4f1Aa41a535Ede6AB321ce3C39597123B13391e0
+  timelock: 0xcA0fc4eE85b8AFF05dAC6510a1d3452E7d8C56ea
+  governor: 0x9a342e71abEab4B9F47Daf520D4C8df3bE938153
+  tokenLock: 0x0f43e8D8612255803293747302435D6846042F2d
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+199_write_abis.js
+=================
+
+Success.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+Summary
+=======
+> Total deployments:   14
+> Final cost:          3.08043012 ETH
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+W:\Projects\INC\inc-contracts>truffle run verify INCToken --network matic
+⚠ Loading mainnet data
+Verifying INCToken
+Pass - Verified: https://polygonscan.com/address/0x07833afE46E945296e842e295DC6FCB329E38899#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify TokenOffer --network matic
+⚠ Loading mainnet data
+Verifying TokenOffer
+Pass - Verified: https://polygonscan.com/address/0xa6B479Da6Dd33954Af2C847CAb4b0097fBaF7681#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify SurveyConfig --network matic
+⚠ Loading mainnet data
+Verifying SurveyConfig
+Pass - Verified: https://polygonscan.com/address/0xE06cC1927423CB020e9aDa389F74B2834fa7eB9A#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify SurveyStorage --network matic
+⚠ Loading mainnet data
+Verifying SurveyStorage
+Pass - Verified: https://polygonscan.com/address/0x8ca11A221b221647645dDBf8bB380886Ae645478#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify SurveyFactory --network matic
+⚠ Loading mainnet data
+Verifying SurveyFactory
+Pass - Verified: https://polygonscan.com/address/0x3607B52c00D3665302f016EfB568B14fa9C3ee83#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify SurveyValidator --network matic
+⚠ Loading mainnet data
+Verifying SurveyValidator
+Pass - Verified: https://polygonscan.com/address/0xc6F391aBA8F8cb5c3D698432E43d3d718CaF8e7C#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify INCForwarder --network matic
+⚠ Loading mainnet data
+Verifying INCForwarder
+Pass - Verified: https://polygonscan.com/address/0x4e493b52aa191fA82ACd9327A0beb0f50Df19457#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify SurveyEngine --network matic
+⚠ Loading mainnet data
+Verifying SurveyEngine
+Pass - Verified: https://polygonscan.com/address/0x4f1Aa41a535Ede6AB321ce3C39597123B13391e0#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify TimelockController --network matic
+⚠ Loading mainnet data
+Verifying TimelockController
+Pass - Verified: https://polygonscan.com/address/0xcA0fc4eE85b8AFF05dAC6510a1d3452E7d8C56ea#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify INCGovernor --network matic
+⚠ Loading mainnet data
+Verifying INCGovernor
+Pass - Verified: https://polygonscan.com/address/0x9a342e71abEab4B9F47Daf520D4C8df3bE938153#code
+Successfully verified 1 contract(s).
+
+W:\Projects\INC\inc-contracts>truffle run verify TokenLock --network matic
+⚠ Loading mainnet data
+Verifying TokenLock
+Pass - Verified: https://polygonscan.com/address/0x0f43e8D8612255803293747302435D6846042F2d#code
+Successfully verified 1 contract(s).
+
