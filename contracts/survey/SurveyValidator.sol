@@ -18,9 +18,9 @@ contract SurveyValidator is ISurveyValidator, Ownable, ReentrancyGuard {
     uint256 public titleMaxLength = 128;
     uint256 public descriptionMaxLength = 512;
     uint256 public urlMaxLength = 2048;
-    uint256 public startMaxTime = 2629743;// maximum time to start the survey
+    uint256 public startMaxTime = 864000;// maximum time to start the survey
     uint256 public rangeMinTime = 86400;// minimum duration time
-    uint256 public rangeMaxTime = 31536000;// maximum duration time
+    uint256 public rangeMaxTime = 2592000;// maximum duration time
     uint256 public questionMaxPerSurvey = 100;
     uint256 public questionMaxLength = 4096;
     uint256 public validatorMaxPerQuestion = 10;
